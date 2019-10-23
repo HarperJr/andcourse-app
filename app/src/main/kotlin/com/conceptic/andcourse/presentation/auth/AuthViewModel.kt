@@ -6,4 +6,8 @@ class AuthViewModel : BaseViewModel() {
     override fun onStart() {
 
     }
+
+    fun onAcceptBtnClicked(email: String, pass: String) {
+
+    }
 }
