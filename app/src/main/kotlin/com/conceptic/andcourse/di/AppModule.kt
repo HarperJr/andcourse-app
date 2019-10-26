@@ -7,12 +7,14 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val AppModule = module {
-    single { SharedPreferencesProvider(get()) }
+object AppModule {
+    operator fun invoke() = module {
+        single { SharedPreferencesProvider(get()) }
 
-    scope(named<SignInFragment>()) {
-        viewModel {
-            SignInViewModel(get(), get())
+        scope(named<SignInFragment>()) {
+            viewModel {
+                SignInViewModel(get(), get())
+            }
         }
     }
 }

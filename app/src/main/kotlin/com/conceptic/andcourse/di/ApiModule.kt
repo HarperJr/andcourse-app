@@ -16,45 +16,47 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val ApiModule = module {
-    single { JwtTokenProvider(get()) }
+object ApiModule {
+    operator fun invoke() = module {
+        single { JwtTokenProvider(get()) }
 
-    single {
-        GsonBuilder()
-            .serializeNulls()
-            .setPrettyPrinting()
-            .disableHtmlEscaping()
-            .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create()
+        single {
+            GsonBuilder()
+                .serializeNulls()
+                .setPrettyPrinting()
+                .disableHtmlEscaping()
+                .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create()
+        }
+
+        single {
+            OkHttpClient.Builder()
+                .addInterceptor { chain -> Interceptors.interceptJwtToken(chain, get()) }
+                .callTimeout(CALL_TIMEOUT, TimeUnit.MILLISECONDS)
+                .build()
+        }
+
+        single {
+            Retrofit.Builder()
+                .client(get<OkHttpClient>())
+                .baseUrl(BuildConfig.API_URL)
+                .addConverterFactory(GsonConverterFactory.create(get()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+                .build()
+        }
+
+        /**
+         * Api instances are declared here
+         */
+        single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
+
+        single<QuestionnaireApi> { get<Retrofit>().create(QuestionnaireApi::class.java) }
+
+        /**
+         * ApiExecutors instances are declared here
+         */
+        single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
     }
 
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor { chain -> Interceptors.interceptJwtToken(chain, get()) }
-            .callTimeout(CALL_TIMEOUT, TimeUnit.MILLISECONDS)
-            .build()
-    }
-
-    single {
-        Retrofit.Builder()
-            .client(get<OkHttpClient>())
-            .baseUrl(BuildConfig.API_URL)
-            .addConverterFactory(GsonConverterFactory.create(get()))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
-            .build()
-    }
-
-    /**
-     * Api instances are declared here
-     */
-    single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
-
-    single<QuestionnaireApi> { get<Retrofit>().create(QuestionnaireApi::class.java) }
-
-    /**
-     * ApiExecutors instances are declared here
-     */
-    single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
+    private const val CALL_TIMEOUT = 100000L
 }
-
-private const val CALL_TIMEOUT = 100000L
