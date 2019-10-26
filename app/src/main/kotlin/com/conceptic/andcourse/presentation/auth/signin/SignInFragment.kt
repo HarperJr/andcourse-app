@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.presentation.auth
+package com.conceptic.andcourse.presentation.auth.signin
 
 import android.os.Bundle
 import android.view.View
@@ -9,9 +9,9 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
 
-class AuthFragment : BaseFragment<AuthViewModel>(R.layout.fragment_auth) {
+class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_auth) {
     override val scope: Scope = createScope(AUTH_SCOPE)
-    override val viewModel: AuthViewModel by scope.viewModel(this)
+    override val viewModel: SignInViewModel by scope.viewModel(this)
 
     private val email = { auth_input_email_value.text.toString() }
     private val pass = { auth_input_pass_value.text.toString() }

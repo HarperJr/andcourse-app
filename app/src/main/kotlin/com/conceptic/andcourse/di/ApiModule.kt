@@ -4,6 +4,8 @@ import com.conceptic.andcourse.BuildConfig
 import com.conceptic.andcourse.data.api.Interceptors
 import com.conceptic.andcourse.data.api.JwtTokenProvider
 import com.conceptic.andcourse.data.api.auth.AuthApi
+import com.conceptic.andcourse.data.api.auth.AuthApiExecutor
+import com.conceptic.andcourse.data.api.auth.AuthApiExecutorImpl
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -35,6 +37,11 @@ val ApiModule = module {
     single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
 
     single<QuestionnaireApi> { get<Retrofit>().create(QuestionnaireApi::class.java) }
+
+    /**
+     * ApiExecutors instances are declared here
+     */
+    single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
 }
 
 private const val CALL_TIMEOUT = 100000L
