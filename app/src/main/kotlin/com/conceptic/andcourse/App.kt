@@ -1,6 +1,7 @@
 package com.conceptic.andcourse
 
 import android.app.Application
+import com.conceptic.andcourse.di.ApiModule
 import com.conceptic.andcourse.di.AppModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -8,7 +9,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 class App : Application() {
-    private val koinModules = listOf(AppModule.instance)
+    private val koinModules = listOf(AppModule, ApiModule)
 
     override fun onCreate() {
         super.onCreate()
