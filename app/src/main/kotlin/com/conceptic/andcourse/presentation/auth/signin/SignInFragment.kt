@@ -5,21 +5,21 @@ import android.view.View
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.ext.createScope
-import kotlinx.android.synthetic.main.fragment_auth.*
+import kotlinx.android.synthetic.main.fragment_signin.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
 
-class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_auth) {
+class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     override val scope: Scope = createScope(AUTH_SCOPE)
     override val viewModel: SignInViewModel by scope.viewModel(this)
 
-    private val email = { auth_input_email_value.text.toString() }
-    private val pass = { auth_input_pass_value.text.toString() }
+    private val email = { signin_input_email_value.text.toString() }
+    private val pass = { signin_input_pass_value.text.toString() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth_btn_accept.setOnClickListener {
+        signin_btn_accept.setOnClickListener {
             viewModel.onAcceptBtnClicked(email(), pass())
         }
     }
