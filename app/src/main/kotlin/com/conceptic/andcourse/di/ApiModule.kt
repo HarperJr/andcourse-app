@@ -1,20 +1,32 @@
 package com.conceptic.andcourse.di
 
 import com.conceptic.andcourse.BuildConfig
-import com.conceptic.andcourse.data.api.Interceptors
-import com.conceptic.andcourse.data.api.JwtTokenProvider
 import com.conceptic.andcourse.data.api.auth.AuthApi
 import com.conceptic.andcourse.data.api.auth.AuthApiExecutor
 import com.conceptic.andcourse.data.api.auth.AuthApiExecutorImpl
+import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
+import com.conceptic.andcourse.data.api.support.Interceptors
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val ApiModule = module {
     single { JwtTokenProvider(get()) }
+
+    single {
+        GsonBuilder()
+            .serializeNulls()
+            .setPrettyPrinting()
+            .disableHtmlEscaping()
+            .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create()
+    }
 
     single {
         OkHttpClient.Builder()
@@ -27,6 +39,7 @@ val ApiModule = module {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
             .baseUrl(BuildConfig.API_URL)
+            .addConverterFactory(GsonConverterFactory.create(get()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
             .build()
     }

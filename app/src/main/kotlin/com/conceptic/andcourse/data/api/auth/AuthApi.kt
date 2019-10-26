@@ -9,9 +9,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthApi {
-    @POST
+    @POST("/signup")
     fun signUp(@Body singUpRequest: SingUpRequest): Single<Response<Nothing>>
 
-    @POST
+    @POST("/signin")
     fun signIn(@Body signInRequest: SignInRequest): Single<Response<JwtTokenResponse>>
 }

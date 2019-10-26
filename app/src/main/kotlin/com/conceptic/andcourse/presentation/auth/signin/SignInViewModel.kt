@@ -1,7 +1,7 @@
 package com.conceptic.andcourse.presentation.auth.signin
 
 import com.conceptic.andcourse.data.api.ApiException
-import com.conceptic.andcourse.data.api.JwtTokenProvider
+import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.auth.signin.SignInCase
 import com.conceptic.andcourse.usecase.auth.signin.SignInParams

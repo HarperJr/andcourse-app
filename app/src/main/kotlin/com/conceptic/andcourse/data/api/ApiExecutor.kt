@@ -1,5 +1,6 @@
 package com.conceptic.andcourse.data.api
 
+import com.conceptic.andcourse.data.api.support.RetrofitResponseMapper
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Response

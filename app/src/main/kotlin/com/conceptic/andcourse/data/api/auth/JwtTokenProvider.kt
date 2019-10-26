@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.data.api
+package com.conceptic.andcourse.data.api.auth
 
 import com.conceptic.andcourse.SharedPreferencesProvider
 

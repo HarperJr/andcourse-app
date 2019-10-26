@@ -1,5 +1,6 @@
-package com.conceptic.andcourse.data.api
+package com.conceptic.andcourse.data.api.support
 
+import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import okhttp3.Interceptor
 import okhttp3.Response
 

@@ -1,5 +1,6 @@
-package com.conceptic.andcourse.data.api
+package com.conceptic.andcourse.data.api.support
 
+import com.conceptic.andcourse.data.api.ApiException
 import retrofit2.Response
 
 object RetrofitResponseMapper {
