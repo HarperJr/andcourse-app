@@ -8,7 +8,7 @@ abstract class BaseViewModel : ViewModel() {
     val errorMessageLiveData: LiveData<String>
         get() = errorMessages
 
-    private val errorMessages = MutableLiveData<String>()
+    protected val errorMessages = MutableLiveData<String>()
 
     abstract fun onStart()
 }
