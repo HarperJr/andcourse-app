@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
 
 class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
-    override val scope: Scope = createScope(AUTH_SCOPE)
+    override val scope: Scope = createScope(SIGNIN_SCOPE)
     override val viewModel: SignInViewModel by scope.viewModel(this)
 
     private val email = { signin_input_email_value.text.toString() }
@@ -25,6 +25,6 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     }
 
     companion object {
-        private val AUTH_SCOPE = "AUTH_SCOPE"
+        private const val SIGNIN_SCOPE = "signin_scope"
     }
 }

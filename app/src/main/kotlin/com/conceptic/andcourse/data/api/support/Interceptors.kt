@@ -8,16 +8,22 @@ import timber.log.Timber
 
 object Interceptors {
     fun jwtTokenInterceptor(jwtTokenProvider: JwtTokenProvider): Interceptor = object : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
-            val request = request().newBuilder()
-                .addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(jwtTokenProvider.get()))
-                .build()
-            proceed(request)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            return with(chain) {
+                val request = request().newBuilder()
+                    .addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(jwtTokenProvider.get()))
+                    .build()
+                proceed(request)
+            }
         }
     }
 
-    fun loggingInterceptor(loggingLevel: HttpLoggingInterceptor.Level) = HttpLoggingInterceptor()
-        .apply { level = loggingLevel }
+    fun loggingInterceptor(): Interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+        override fun log(message: String) {
+            Timber.tag(OK_HTTP_CLIENT_TAG).d(message)
+        }
+    })
 
+    private const val OK_HTTP_CLIENT_TAG = "OkHttp"
     private const val HEADER_AUTHORIZATION = "Authorization"
 }
