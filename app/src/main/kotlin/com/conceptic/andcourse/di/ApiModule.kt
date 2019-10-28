@@ -10,6 +10,7 @@ import com.conceptic.andcourse.data.api.support.Interceptors
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -31,7 +32,8 @@ object ApiModule {
 
         single {
             OkHttpClient.Builder()
-                .addInterceptor { chain -> Interceptors.interceptJwtToken(chain, get()) }
+                .addInterceptor(Interceptors.loggingInterceptor(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor(Interceptors.jwtTokenInterceptor(get()))
                 .callTimeout(CALL_TIMEOUT, TimeUnit.MILLISECONDS)
                 .build()
         }
