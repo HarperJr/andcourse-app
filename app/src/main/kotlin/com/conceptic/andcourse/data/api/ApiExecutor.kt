@@ -14,7 +14,7 @@ open class ApiExecutor<T>(private val api: T) {
      *
      * @param serviceInvocation invocation of api service, throws retrofit response with model
      * @exception ApiException if response code is 4xx, 5xx
-     * @exception Exception is response is null
+     * @exception Exception if response is null
      */
     protected fun <E> executeService(serviceInvocation: T.() -> Single<Response<E>>): Observable<E> {
         return serviceInvocation.invoke(api)
