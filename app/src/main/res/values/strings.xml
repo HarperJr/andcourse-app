@@ -9,4 +9,11 @@
     <!--IntroFragment-->
     <string name="intro_pass_btn_text">Pass</string>
     <string name="intro_test_description">Test description</string>
+    <string name="signup_date_birth">Date birth</string>
+    <string name="signup_date_email">Email</string>
+    <string name="signup_case_male">Male</string>
+    <string name="signup_case_female">Female</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_rep_password">Repeat password</string>
+    <string name="signup_accept">SignUp</string>
 </resources>
