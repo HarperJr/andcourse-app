@@ -9,13 +9,13 @@ class SignUpCase(
     private val authApiExecutor: AuthApiExecutor
 ) : UseCase<SignUpParams, Nothing> {
     override fun execute(param: SignUpParams): Observable<Nothing> {
-        return authApiExecutor.signUp(SignUpRequest(
-            name = param.name,
-            surname = param.surname,
-            password = param.password,
-            dateBirth = param.dateBirth,
-            email = param.email,
-            gender = param.gender.ordinal
-        ))
+        return authApiExecutor.signUp(
+            SignUpRequest(
+                email = param.email,
+                password = param.password,
+                dateBirth = param.dateBirth,
+                gender = param.gender.ordinal
+            )
+        )
     }
 }

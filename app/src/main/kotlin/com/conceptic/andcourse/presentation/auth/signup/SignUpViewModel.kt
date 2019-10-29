@@ -15,7 +15,7 @@ class SignUpViewModel(
 
     fun onAcceptBtnClicked(email: String, dateBirth: String, password: String, repeatPassword: String, gender: Gender) {
         signUpCase
-            .execute(SignUpParams(email = email, dateBirth = dateBirth, password = password, gender = gender.ordinal))
+            .execute(SignUpParams(email = email, dateBirth = dateBirth, password = password, gender = gender))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
