@@ -86,7 +86,12 @@ fun TextInputLayout.validate(
 }
 
 fun validate(vararg validators: Validator, onInvalid: (() -> Unit)? = null, onValid: () -> Unit) {
-    val validated = validators.reduceOther(true) { acc, validator -> acc!! && validator.invoke() } ?: true
+    var validated = true
+    validators.forEach { validator ->
+        if (!validator.invoke()) {
+            validated = false
+        }
+    }
     if (validated) {
         onValid.invoke()
     } else {

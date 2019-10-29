@@ -2,12 +2,12 @@
     <string name="app_name">andcourse</string>
 
     <!--SignInFragment-->
-    <string name="signin_btn_accept_text">SignIp</string>
+    <string name="signin_btn_accept_text">SignIn</string>
     <string name="signin_input_email_text">Email</string>
     <string name="signin_input_pass_text">Password</string>
     <string name="signin_with_google">Sign in with google</string>
     <string name="signin_text">SignIn</string>
-    <string name="signin_goto_signup">Dont have an account yet ?</string>
+    <string name="signin_goto_signup">Don\'t have an account yet? SignUp</string>
 
     <!--IntroFragment-->
     <string name="intro_pass_btn_text">Pass</string>
