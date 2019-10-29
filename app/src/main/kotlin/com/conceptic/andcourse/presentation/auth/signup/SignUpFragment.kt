@@ -46,15 +46,17 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        validate(email, password, repeatPassword) {
-            signup_btn_accept.setOnClickListener {
-                viewModel.onAcceptBtnClicked(
-                    email.value,
-                    dateBirth.value,
-                    password.value,
-                    repeatPassword.value,
-                    gender
-                )
+        signup_btn_accept.setOnClickListener {
+            validate(email, dateBirth, password, repeatPassword) {
+                signup_btn_accept.setOnClickListener {
+                    viewModel.onAcceptBtnClicked(
+                        email.value,
+                        dateBirth.value,
+                        password.value,
+                        repeatPassword.value,
+                        gender
+                    )
+                }
             }
         }
     }

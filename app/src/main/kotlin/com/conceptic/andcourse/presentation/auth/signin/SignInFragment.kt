@@ -2,6 +2,7 @@ package com.conceptic.andcourse.presentation.auth.signin
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.ext.createScope
@@ -31,6 +32,10 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
             validate(email, password) {
                 viewModel.onAcceptBtnClicked(email.value, password.value)
             }
+        }
+
+        signin_btn_goto_signup.setOnClickListener {
+            findNavController().navigate(R.id.action_signinFragment_to_signUpFragment)
         }
     }
 

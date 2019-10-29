@@ -49,7 +49,7 @@ class ValidationScope(lazyValue: () -> String) {
         validations.add(Validation(errorMessage, predicate))
     }
 
-    fun validate(onValid: () -> kotlin.Unit, onInvalid: (String) -> Unit) {
+    fun validate(onValid: () -> Unit, onInvalid: (String) -> Unit) {
         validations.forEach { validation ->
             if (!validation.predicate.invoke(value)) {
                 onInvalid.invoke(validation.errorMessage)
@@ -63,7 +63,7 @@ class ValidationScope(lazyValue: () -> String) {
 
 @Throws(IllegalStateException::class)
 fun TextInputLayout.validate(
-    scopeInvocations: ValidationScope.() -> ValidationScope
+    validationInvocations: ValidationScope.() -> ValidationScope
 ): Validator {
     val editTextView = this.editText as TextInputEditText?
         ?: throw IllegalStateException("Fatal error: input text layout doesn't contain input edit text view")
@@ -73,7 +73,7 @@ fun TextInputLayout.validate(
 
         override fun invoke(): Boolean {
             var validated = true
-            scopeInvocations.invoke(ValidationScope(lazyValue))
+            validationInvocations.invoke(ValidationScope(lazyValue))
                 .also { scope ->
                     scope.validate({ this@validate.error = null }, { errorMessage ->
                         this@validate.error = errorMessage
@@ -86,7 +86,7 @@ fun TextInputLayout.validate(
 }
 
 fun validate(vararg validators: Validator, onInvalid: (() -> Unit)? = null, onValid: () -> Unit) {
-    val validated = validators.all { it.invoke() }
+    val validated = validators.reduceOther(true) { acc, validator -> acc!! && validator.invoke() } ?: true
     if (validated) {
         onValid.invoke()
     } else {
