@@ -5,6 +5,8 @@ import com.conceptic.andcourse.presentation.auth.signin.SignInFragment
 import com.conceptic.andcourse.presentation.auth.signin.SignInViewModel
 import com.conceptic.andcourse.presentation.auth.signup.SignUpFragment
 import com.conceptic.andcourse.presentation.auth.signup.SignUpViewModel
+import com.conceptic.andcourse.presentation.questionnaire.QuestionFragment
+import com.conceptic.andcourse.presentation.questionnaire.QuestionViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -15,13 +17,19 @@ object AppModule {
 
         scope(named<SignInFragment>()) {
             viewModel {
-                SignInViewModel(get(), get())
+                SignInViewModel(get())
             }
         }
 
         scope(named<SignUpFragment>()) {
             viewModel {
                 SignUpViewModel(get())
+            }
+        }
+
+        scope(named<QuestionFragment>()) {
+            viewModel {
+                QuestionViewModel()
             }
         }
     }

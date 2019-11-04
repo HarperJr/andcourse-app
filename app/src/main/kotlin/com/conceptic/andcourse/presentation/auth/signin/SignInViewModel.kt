@@ -1,7 +1,6 @@
 package com.conceptic.andcourse.presentation.auth.signin
 
 import com.conceptic.andcourse.data.api.ApiException
-import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.auth.signin.SignInCase
 import com.conceptic.andcourse.usecase.auth.signin.SignInParams
@@ -10,8 +9,7 @@ import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 
 class SignInViewModel(
-    private val signInCase: SignInCase,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val signInCase: SignInCase
 ) : BaseViewModel() {
     private var signInDisposable = Disposables.disposed()
 
@@ -22,8 +20,8 @@ class SignInViewModel(
         signInDisposable = signInCase.execute(SignInParams(email, pass))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ jwt ->
-                jwtTokenProvider.put(jwt)
+            .subscribe({
+
             }, { throwable ->
                 ApiException.letFromThrowable(throwable) {
                     errorMessages.postValue(it)

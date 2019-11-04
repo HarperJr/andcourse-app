@@ -6,6 +6,8 @@ import com.conceptic.andcourse.data.api.auth.AuthApiExecutor
 import com.conceptic.andcourse.data.api.auth.AuthApiExecutorImpl
 import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
+import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
+import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutorImpl
 import com.conceptic.andcourse.data.api.support.Interceptors
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -57,6 +59,8 @@ object ApiModule {
          * ApiExecutors instances are declared here
          */
         single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
+
+        single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get()) }
     }
 
     private const val CALL_TIMEOUT = 100000L
