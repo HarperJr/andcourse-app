@@ -25,10 +25,18 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
             required(errorMessage = "Password is required")
         }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.signInSuccessLiveData.observe({ lifecycle }) {
+            findNavController().navigate(R.id.action_signinFragment_to_questionnaireBeginFragment)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        signin_btn_accept.setOnClickListener {
+        signin_btn_signin.setOnClickListener {
             validate(email, password) {
                 viewModel.onAcceptBtnClicked(email.value, password.value)
             }

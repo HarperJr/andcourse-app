@@ -21,4 +21,8 @@
     <string name="signup_password">Password</string>
     <string name="signup_rep_password">Repeat password</string>
     <string name="signup_accept">SignUp</string>
+
+    <!--QuestionnaireIntroduceFragment-->
+    <string name="questionnaire_intro_begin">Begin</string>
+    <string name="questionnaire_intro_description">Description</string>
 </resources>
