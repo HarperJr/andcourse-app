@@ -1,8 +1,7 @@
 package com.conceptic.andcourse.data.api.questionnaire
 
 import com.conceptic.andcourse.data.api.ApiExecutor
-import com.conceptic.andcourse.data.api.questionnaire.model.QuestionNextResponse
-import com.conceptic.andcourse.data.api.questionnaire.model.QuestionnaireBeginResponse
+import com.conceptic.andcourse.data.api.questionnaire.model.*
 import io.reactivex.Observable
 
 /**
@@ -11,7 +10,9 @@ import io.reactivex.Observable
 interface QuestionnaireApiExecutor {
     fun beginQuestionnaire(): Observable<QuestionnaireBeginResponse>
 
-    fun nextQuestion(): Observable<QuestionNextResponse>
+    fun nextQuestion(request: NextQuestionRequest): Observable<QuestionNextResponse>
+
+    fun completeQuestionnaire(request: CompleteQuestionnaireRequest): Observable<CompleteQuestionnaireResponse>
 }
 
 class QuestionnaireApiExecutorImpl(questionnaireApi: QuestionnaireApi) :
@@ -19,6 +20,9 @@ class QuestionnaireApiExecutorImpl(questionnaireApi: QuestionnaireApi) :
     override fun beginQuestionnaire(): Observable<QuestionnaireBeginResponse> =
         executeService { beginQuestionnaire() }
 
-    override fun nextQuestion(): Observable<QuestionNextResponse> =
-        executeService { nextQuestion() }
+    override fun nextQuestion(request: NextQuestionRequest): Observable<QuestionNextResponse> =
+        executeService { nextQuestion(request) }
+
+    override fun completeQuestionnaire(request: CompleteQuestionnaireRequest): Observable<CompleteQuestionnaireResponse> =
+        executeService { completeQuestionnaire(request) }
 }

@@ -1,5 +1,3 @@
 package com.conceptic.andcourse.data.api.questionnaire.model
 
-class QuestionNextResponse {
-
-}
+data class QuestionNextResponse(val nextQuestion: String)
