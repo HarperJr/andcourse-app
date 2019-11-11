@@ -10,7 +10,7 @@ import retrofit2.http.POST
 
 interface AuthApi {
     @POST("/signup")
-    fun signUpAsync(@Body signUpRequest: SignUpRequest): Deferred<Response<Nothing>>
+    fun signUpAsync(@Body signUpRequest: SignUpRequest): Deferred<Response<Unit>>
 
     @POST("/signin")
     fun signInAsync(@Body signInRequest: SignInRequest): Deferred<Response<JwtTokenResponse>>

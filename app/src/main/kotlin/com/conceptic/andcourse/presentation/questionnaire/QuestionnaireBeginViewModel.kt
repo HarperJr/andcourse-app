@@ -12,8 +12,6 @@ class QuestionnaireBeginViewModel(
 ) : BaseViewModel() {
     val beginSuccessLiveData = MutableLiveData<Unit>()
 
-    override fun onStart() {}
-
     fun onBeginBtnClicked() {
         viewModelScope.launch {
             runCatching {

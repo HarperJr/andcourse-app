@@ -1,102 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signup_input_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/signup_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="@string/signup_date_email"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signup_input_email_value"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signup_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/signup_date_email"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signup_input_date_birth"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/signup_date_birth"
-        app:layout_constraintTop_toBottomOf="@id/signup_input_email">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_input_email_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signup_input_date_birth_value"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signup_input_date_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/signup_date_birth"
+                app:layout_constraintTop_toBottomOf="@id/signup_input_email">
 
-    <RadioGroup
-        android:id="@+id/signup_radio_group_gender"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/signup_input_date_birth"
-        app:layout_constraintTop_toBottomOf="@id/signup_input_date_birth">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_input_date_birth_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="false"
+                    android:inputType="date"
+                    android:maxLines="1" />
 
-        <RadioButton
-            android:id="@+id/signup_radio_male"
-            android:text="@string/signup_case_male"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioButton
-            android:id="@+id/signup_radio_female"
-            android:text="@string/signup_case_female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <RadioGroup
+                android:id="@+id/signup_radio_group_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@id/signup_input_date_birth"
+                app:layout_constraintTop_toBottomOf="@id/signup_input_date_birth">
 
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/signup_radio_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup_case_male" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signup_input_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/signup_password"
-        app:layout_constraintTop_toBottomOf="@id/signup_radio_group_gender">
+                <RadioButton
+                    android:id="@+id/signup_radio_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup_case_female" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signup_input_password_value"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            </RadioGroup>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signup_input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/signup_password"
+                app:layout_constraintTop_toBottomOf="@id/signup_radio_group_gender"
+                app:passwordToggleEnabled="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signup_input_rep_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/signup_rep_password"
-        app:layout_constraintTop_toBottomOf="@id/signup_input_password">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_input_password_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signup_input_rep_password_value"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/signup_input_rep_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="@string/signup_rep_password"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/signup_input_password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_input_rep_password_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
-        app:layout_constraintTop_toBottomOf="@id/signup_input_rep_password"
-        android:layout_margin="16dp"
-        android:text="@string/signup_accept"
         android:id="@+id/signup_btn_accept"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/signup_accept"
+        app:layout_constraintTop_toBottomOf="@id/signup_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

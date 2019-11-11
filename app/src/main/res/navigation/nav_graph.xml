@@ -5,15 +5,15 @@
     app:startDestination="@id/introFragment">
 
     <fragment
-        android:id="@+id/signinFragment"
+        android:id="@+id/signInFragment"
         android:name="com.conceptic.andcourse.presentation.auth.signin.SignInFragment"
-        android:label="SignInFragment" >
+        android:label="SignInFragment">
         <action
             android:id="@+id/action_signinFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_signinFragment_to_questionnaireBeginFragment"
-            app:destination="@id/introduceFragment" />
+            app:destination="@id/beginQuestionnaireFragment" />
     </fragment>
 
     <fragment
@@ -22,16 +22,20 @@
         android:label="IntroFragment">
         <action
             android:id="@+id/action_introFragment_to_signinFragment"
-            app:destination="@id/signinFragment" />
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.conceptic.andcourse.presentation.auth.signup.SignUpFragment"
-        android:label="SignUpFragment" />
+        android:label="SignUpFragment">
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/introduceFragment"
+        android:id="@+id/beginQuestionnaireFragment"
         android:name="com.conceptic.andcourse.presentation.questionnaire.QuestionnaireBeginFragment"
-        android:label="IntroduceFragment" >
+        android:label="BeginQuestionnaireFragment">
         <action
             android:id="@+id/action_questionnaireBeginFragment_to_questionFragment"
             app:destination="@id/questionFragment" />

@@ -6,24 +6,28 @@ import com.conceptic.andcourse.data.api.ApiException
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.auth.signin.SignInCase
 import com.conceptic.andcourse.usecase.auth.signin.SignInParams
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class SignInViewModel(
     private val signInCase: SignInCase
 ) : BaseViewModel() {
     val signInSuccessLiveData = MutableLiveData<Unit>()
 
-    override fun onStart() {}
+    private val signInJob = SupervisorJob()
+    private val signInScope = CoroutineScope(viewModelScope.coroutineContext + signInJob)
 
-    fun onSignInBtnClicked(email: String, pass: String) = viewModelScope.launch(Dispatchers.IO) {
-        runCatching {
-            signInCase.execute(SignInParams(email, pass))
-        }.onSuccess { signInSuccessLiveData.value = it }
-            .onFailure { throwable ->
+    fun onSignInBtnClicked(email: String, pass: String) {
+        signInJob.cancelChildren()
+        signInScope.launch(Dispatchers.IO) {
+            runCatching {
+                signInCase.execute(SignInParams(email, pass))
+            }.onSuccess {
+                signInSuccessLiveData.postValue(it)
+            }.onFailure { throwable ->
                 ApiException.letFromThrowable(throwable) {
                     errorMessages.postValue(it)
                 }
             }
+        }
     }
 }

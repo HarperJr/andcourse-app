@@ -13,7 +13,7 @@ class SignUpCase(
             SignUpRequest(
                 email = param.email,
                 password = param.password,
-                dateBirth = param.dateBirth,
+                dateBirth = param.dateBirth.time,
                 gender = param.gender.ordinal
             )
         )

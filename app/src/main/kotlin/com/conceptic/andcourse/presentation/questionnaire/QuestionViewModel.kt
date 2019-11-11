@@ -27,8 +27,6 @@ class QuestionViewModel(
         }
     }
 
-    override fun onStart() {}
-
     fun onQuestionAnswered(answer: Answer) = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
             nextQuestionCase.execute(NextQuestionParams())
