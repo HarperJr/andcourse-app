@@ -16,22 +16,21 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
     override val viewModel: SignUpViewModel by scope.viewModel(this)
 
     private val email
-        get() = signup_input_email.validate {
+        get() = signup_input_email validate {
             required(errorMessage = "Email is required")
             email(errorMessage = "Email doesn't match it's format")
         }
     private val dateBirth
-        get() = signup_input_date_birth.validate {
+        get() = signup_input_date_birth validate {
             required(errorMessage = "Birth date is required")
         }
     private val password
-        get() = signup_input_password.validate {
+        get() = signup_input_password validate {
             required(errorMessage = "Password is required")
-            password(errorMessage = "Password must contain at least one digit character")
             minLength(errorMessage = "Password must be at least 8 characters length", length = 8)
         }
     private val repeatPassword
-        get() = signup_input_rep_password.validate {
+        get() = signup_input_rep_password validate {
             required(errorMessage = "Please repeat your password")
             matches(errorMessage = "Password doesn't match", matchingValue = password.value)
         }

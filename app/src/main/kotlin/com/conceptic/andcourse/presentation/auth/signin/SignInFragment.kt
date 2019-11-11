@@ -16,12 +16,12 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     override val viewModel: SignInViewModel by scope.viewModel(this)
 
     private val email
-        get() = signin_input_email.validate {
+        get() = signin_input_email validate {
             required(errorMessage = "Email is required")
             email(errorMessage = "Email doesn't match it's format")
         }
     private val password
-        get() = signin_input_password.validate {
+        get() = signin_input_password validate {
             required(errorMessage = "Password is required")
         }
 

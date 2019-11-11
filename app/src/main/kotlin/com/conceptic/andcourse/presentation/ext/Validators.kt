@@ -8,26 +8,21 @@ typealias ValidationPredicate = (value: String) -> Boolean
 interface Validator {
     val value: String
 
-    fun invoke(): Boolean
+    operator fun invoke(): Boolean
 }
 
 data class Validation(val errorMessage: String, val predicate: ValidationPredicate)
 
-class ValidationScope(lazyValue: () -> String) {
-    private val value by lazy(lazyValue)
+class ValidationScope(private val value: () -> String) {
     private val validations: MutableList<Validation> = mutableListOf()
+    var key = 0
+        private set
 
-    fun email(errorMessage: String) = this.also {
-        validations.add(Validation(errorMessage) { value ->
-            "[A-Za-z0-9_\\-]+@\\w+\\.(ru|com|org|net)".toRegex().matches(value)
-        })
-    }
+    fun email(errorMessage: String) = regex(errorMessage, "[A-Za-z0-9_\\-]+@\\w+\\.\\w")
 
-    fun password(errorMessage: String) = this.also {
-        validations.add(Validation(errorMessage) { value ->
-            "[A-Za-z0-9]+".toRegex().matches(value)
-        })
-    }
+    fun numeric(errorMessage: String) = regex(errorMessage, "\\d+")
+
+    fun symbolic(errorMessage: String) = regex(errorMessage, "\\w+")
 
     fun required(errorMessage: String) = this.also {
         validations.add(Validation(errorMessage) { value -> value.isNotEmpty() && value.isNotBlank() })
@@ -45,37 +40,51 @@ class ValidationScope(lazyValue: () -> String) {
         validations.add(Validation(errorMessage) { value -> value == matchingValue })
     }
 
+    fun regex(errorMessage: String, regex: String) = this.also {
+        validations.add(Validation(errorMessage) { value ->
+            regex.toRegex().matches(value)
+        })
+    }
+
     fun custom(errorMessage: String, predicate: ValidationPredicate) = this.also {
         validations.add(Validation(errorMessage, predicate))
     }
 
+    fun key(key: Int) = this.also {
+        it.key = key
+    }
+
     fun validate(onValid: () -> Unit, onInvalid: (String) -> Unit) {
+        val valueDefinition = value.invoke()
         validations.forEach { validation ->
-            if (!validation.predicate.invoke(value)) {
+            if (!validation.predicate.invoke(valueDefinition)) {
                 onInvalid.invoke(validation.errorMessage)
                 return
             }
             onValid.invoke()
         }
     }
-
 }
 
 @Throws(IllegalStateException::class)
-fun TextInputLayout.validate(
+infix fun TextInputLayout.validate(
     validationInvocations: ValidationScope.() -> ValidationScope
 ): Validator {
-    val editTextView = this.editText as TextInputEditText?
-        ?: throw IllegalStateException("Fatal error: input text layout doesn't contain input edit text view")
-    val lazyValue = { editTextView.text.toString() }
+    val valueDelegate = {
+        val editTextView = this@validate.editText as TextInputEditText?
+            ?: throw IllegalStateException("Fatal error: input text layout doesn't contain input edit text view")
+        editTextView.text.toString()
+    }
     return object : Validator {
-        override val value: String by lazy(lazyValue)
+        override val value: String = valueDelegate.invoke()
 
-        override fun invoke(): Boolean {
+        override operator fun invoke(): Boolean {
             var validated = true
-            validationInvocations.invoke(ValidationScope(lazyValue))
+            validationInvocations.invoke(ValidationScope(valueDelegate))
                 .also { scope ->
-                    scope.validate({ this@validate.error = null }, { errorMessage ->
+                    scope.validate({
+                        this@validate.error = null
+                    }, { errorMessage ->
                         this@validate.error = errorMessage
                         validated = false
                     })
@@ -85,16 +94,15 @@ fun TextInputLayout.validate(
     }
 }
 
-fun validate(vararg validators: Validator, onInvalid: (() -> Unit)? = null, onValid: () -> Unit) {
-    var validated = true
-    validators.forEach { validator ->
-        if (!validator.invoke()) {
-            validated = false
-        }
-    }
-    if (validated) {
+fun validate(
+    vararg validators: Validator,
+    onInvalid: ((List<Validator>) -> Unit)? = null,
+    onValid: () -> Unit
+) {
+    val invalidFields = validators.filter { !it.invoke() }
+    if (invalidFields.isEmpty()) {
         onValid.invoke()
     } else {
-        onInvalid?.invoke()
+        onInvalid?.invoke(invalidFields)
     }
 }
