@@ -1,8 +1,6 @@
 package com.conceptic.andcourse.data.api
 
-import com.conceptic.andcourse.data.api.support.RetrofitResponseMapper
-import io.reactivex.Observable
-import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 
 /**
@@ -10,15 +8,19 @@ import retrofit2.Response
  */
 open class ApiExecutor<T>(private val api: T) {
     /**
-     * This method consumes any api method invocation and throws it's mapped response wrapped into rx java observable
+     * This method consumes any api method invocation and returns it's body mapped to response class
      *
      * @param serviceInvocation invocation of api service, throws retrofit response with model
      * @exception ApiException if response code is 4xx, 5xx
-     * @exception Exception if response is null
      */
-    protected fun <E> executeService(serviceInvocation: T.() -> Single<Response<E>>): Observable<E> {
-        return serviceInvocation.invoke(api)
-            .map { RetrofitResponseMapper.map(it) }
-            .toObservable()
+    protected suspend fun <E> executeService(serviceInvocation: T.() -> Deferred<Response<E>>): E {
+        val response = serviceInvocation.invoke(api).await()
+        return if (response.isSuccessful) {
+            response.body() ?: throw ApiException(response.code(), "Response is null")
+        } else {
+            response.errorBody()?.let {
+                throw ApiException(response.code(), it.string())
+            } ?: throw ApiException(response.code(), response.message())
+        }
     }
 }

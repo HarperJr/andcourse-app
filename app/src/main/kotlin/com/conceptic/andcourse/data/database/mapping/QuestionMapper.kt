@@ -14,8 +14,4 @@ object QuestionMapper :
         id = e.id,
         content = e.content
     )
-
-    override fun toModel(tList: List<QuestionEntity>): List<Question> = tList.map { QuestionMapper.toModel(it) }
-
-    override fun toEntity(eList: List<Question>): List<QuestionEntity> = eList.map { QuestionMapper.toEntity(it) }
 }

@@ -3,15 +3,15 @@ package com.conceptic.andcourse.data.api.auth
 import com.conceptic.andcourse.data.api.auth.model.JwtTokenResponse
 import com.conceptic.andcourse.data.api.auth.model.SignInRequest
 import com.conceptic.andcourse.data.api.auth.model.SignUpRequest
-import io.reactivex.Single
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthApi {
     @POST("/signup")
-    fun signUp(@Body signUpRequest: SignUpRequest): Single<Response<Nothing>>
+    fun signUpAsync(@Body signUpRequest: SignUpRequest): Deferred<Response<Nothing>>
 
     @POST("/signin")
-    fun signIn(@Body signInRequest: SignInRequest): Single<Response<JwtTokenResponse>>
+    fun signInAsync(@Body signInRequest: SignInRequest): Deferred<Response<JwtTokenResponse>>
 }

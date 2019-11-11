@@ -1,9 +1,11 @@
 package com.conceptic.andcourse.presentation.questionnaire
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.conceptic.andcourse.data.api.ApiException
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.questionnaire.BeginQuestionnaireCase
+import kotlinx.coroutines.launch
 
 class QuestionnaireBeginViewModel(
     private val beginQuestionnaireCase: BeginQuestionnaireCase
@@ -13,15 +15,15 @@ class QuestionnaireBeginViewModel(
     override fun onStart() {}
 
     fun onBeginBtnClicked() {
-        beginQuestionnaireCase
-            .execute(Unit)
-            .subscribe({
-                beginSuccessLiveData.value = Unit
-            }, { throwable ->
-                ApiException.letFromThrowable(throwable) {
-                    errorMessages.postValue(it)
+        viewModelScope.launch {
+            runCatching {
+                beginQuestionnaireCase.execute(Unit)
+            }.onSuccess { beginSuccessLiveData.value = Unit }
+                .onFailure { throwable ->
+                    ApiException.letFromThrowable(throwable) {
+                        errorMessages.postValue(it)
+                    }
                 }
-            })
-            .disposeWhenCleared()
+        }
     }
 }

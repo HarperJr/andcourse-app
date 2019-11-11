@@ -38,7 +38,7 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
 
         signin_btn_signin.setOnClickListener {
             validate(email, password) {
-                viewModel.onAcceptBtnClicked(email.value, password.value)
+                viewModel.onSignInBtnClicked(email.value, password.value)
             }
         }
 

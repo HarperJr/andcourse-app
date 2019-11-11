@@ -1,12 +1,22 @@
 package com.conceptic.andcourse.data.repos
 
+import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
 import com.conceptic.andcourse.data.database.dao.QuestionDao
-import com.conceptic.andcourse.data.database.entity.QuestionEntity
 import com.conceptic.andcourse.data.database.mapping.QuestionMapper
 import com.conceptic.andcourse.data.model.Question
 
-interface QuestionRepository : Repository<Question, String>
+interface QuestionRepository {
+    suspend fun storeQuestions(questions: List<Question>)
+    suspend fun questions(): List<Question>
+}
 
-class QuestionRepositoryImpl(dao: QuestionDao) :
-    BaseRepository<QuestionEntity, Question, String>(dao, QuestionMapper, QuestionEntity::class),
-    QuestionRepository
+class QuestionRepositoryImpl(
+    private val questionnaireApiExecutor: QuestionnaireApiExecutor,
+    private val dao: QuestionDao
+) : QuestionRepository {
+    override suspend fun storeQuestions(questions: List<Question>) {
+        dao.insert(questions.map { QuestionMapper.toEntity(it) })
+    }
+
+    override suspend fun questions(): List<Question> = dao.all().map { QuestionMapper.toModel(it) }
+}

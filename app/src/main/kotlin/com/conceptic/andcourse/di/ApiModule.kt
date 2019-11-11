@@ -11,10 +11,10 @@ import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutorIm
 import com.conceptic.andcourse.data.api.support.Interceptors
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -44,7 +44,7 @@ object ApiModule {
                 .client(get<OkHttpClient>())
                 .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create(get()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
                 .build()
         }
 
@@ -63,5 +63,5 @@ object ApiModule {
         single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get()) }
     }
 
-    private const val CALL_TIMEOUT = 100000L
+    private const val CALL_TIMEOUT = 10000L
 }

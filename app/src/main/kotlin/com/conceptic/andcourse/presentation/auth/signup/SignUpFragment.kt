@@ -52,7 +52,6 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
                         email.value,
                         dateBirth.value,
                         password.value,
-                        repeatPassword.value,
                         gender
                     )
                 }

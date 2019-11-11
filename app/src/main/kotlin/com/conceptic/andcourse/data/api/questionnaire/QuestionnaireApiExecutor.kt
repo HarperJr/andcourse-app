@@ -2,27 +2,24 @@ package com.conceptic.andcourse.data.api.questionnaire
 
 import com.conceptic.andcourse.data.api.ApiExecutor
 import com.conceptic.andcourse.data.api.questionnaire.model.*
-import io.reactivex.Observable
 
 /**
  * ApiExecutor's interface
  */
 interface QuestionnaireApiExecutor {
-    fun beginQuestionnaire(): Observable<QuestionnaireBeginResponse>
+    suspend fun beginQuestionnaire(): QuestionnaireBeginResponse
 
-    fun nextQuestion(request: NextQuestionRequest): Observable<QuestionNextResponse>
+    suspend fun nextQuestion(request: NextQuestionRequest): QuestionNextResponse
 
-    fun completeQuestionnaire(request: CompleteQuestionnaireRequest): Observable<CompleteQuestionnaireResponse>
+    suspend fun completeQuestionnaire(request: CompleteQuestionnaireRequest): CompleteQuestionnaireResponse
 }
 
 class QuestionnaireApiExecutorImpl(questionnaireApi: QuestionnaireApi) :
     ApiExecutor<QuestionnaireApi>(questionnaireApi), QuestionnaireApiExecutor {
-    override fun beginQuestionnaire(): Observable<QuestionnaireBeginResponse> =
-        executeService { beginQuestionnaire() }
+    override suspend fun beginQuestionnaire() = executeService { beginQuestionnaireAsync() }
 
-    override fun nextQuestion(request: NextQuestionRequest): Observable<QuestionNextResponse> =
-        executeService { nextQuestion(request) }
+    override suspend fun nextQuestion(request: NextQuestionRequest) = executeService { nextQuestionAsync(request) }
 
-    override fun completeQuestionnaire(request: CompleteQuestionnaireRequest): Observable<CompleteQuestionnaireResponse> =
-        executeService { completeQuestionnaire(request) }
+    override suspend fun completeQuestionnaire(request: CompleteQuestionnaireRequest) =
+        executeService { completeQuestionnaireAsync(request) }
 }

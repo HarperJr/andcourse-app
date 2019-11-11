@@ -1,11 +1,13 @@
 package com.conceptic.andcourse.presentation.auth.signup
 
+import androidx.lifecycle.viewModelScope
+import com.conceptic.andcourse.data.api.ApiException
 import com.conceptic.andcourse.data.model.Gender
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.auth.signup.SignUpCase
 import com.conceptic.andcourse.usecase.auth.signup.SignUpParams
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SignUpViewModel(
     private val signUpCase: SignUpCase
@@ -13,16 +15,16 @@ class SignUpViewModel(
 
     override fun onStart() {}
 
-    fun onAcceptBtnClicked(email: String, dateBirth: String, password: String, repeatPassword: String, gender: Gender) {
-        signUpCase
-            .execute(SignUpParams(email = email, dateBirth = dateBirth, password = password, gender = gender))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-
-            }, { throwable ->
-
-            })
-            .disposeWhenCleared()
+    fun onAcceptBtnClicked(
+        email: String, dateBirth: String,
+        password: String, gender: Gender
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        runCatching {
+            signUpCase
+                .execute(SignUpParams(email = email, dateBirth = dateBirth, password = password, gender = gender))
+        }.onSuccess { }
+            .onFailure { throwable ->
+                ApiException.letFromThrowable(throwable) { errorMessages.value = it }
+            }
     }
 }

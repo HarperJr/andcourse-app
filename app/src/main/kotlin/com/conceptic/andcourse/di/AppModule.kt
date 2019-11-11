@@ -37,7 +37,7 @@ object AppModule {
 
         scope(named<QuestionFragment>()) {
             viewModel {
-                QuestionViewModel(get())
+                QuestionViewModel(get(), get())
             }
         }
     }

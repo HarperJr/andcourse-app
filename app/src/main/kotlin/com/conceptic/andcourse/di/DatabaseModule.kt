@@ -2,8 +2,6 @@ package com.conceptic.andcourse.di
 
 import androidx.room.Room
 import com.conceptic.andcourse.data.database.Database
-import com.conceptic.andcourse.data.repos.QuestionRepository
-import com.conceptic.andcourse.data.repos.QuestionRepositoryImpl
 import org.koin.dsl.module
 
 object DatabaseModule {
@@ -17,8 +15,8 @@ object DatabaseModule {
         }
 
         /**
-         * Repositories are declared here
+         * Dao are declared here
          */
-        factory<QuestionRepository> { QuestionRepositoryImpl(get<Database>().questionDao()) }
+        factory { get<Database>().questionDao() }
     }
 }

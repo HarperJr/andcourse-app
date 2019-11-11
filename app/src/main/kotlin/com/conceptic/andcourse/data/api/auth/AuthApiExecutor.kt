@@ -4,19 +4,18 @@ import com.conceptic.andcourse.data.api.ApiExecutor
 import com.conceptic.andcourse.data.api.auth.model.JwtTokenResponse
 import com.conceptic.andcourse.data.api.auth.model.SignInRequest
 import com.conceptic.andcourse.data.api.auth.model.SignUpRequest
-import io.reactivex.Observable
 
 /**
  * ApiExecutor's interface
  */
 interface AuthApiExecutor {
-    fun signUp(request: SignUpRequest): Observable<Nothing>
+    suspend fun signUp(request: SignUpRequest)
 
-    fun signIn(request: SignInRequest): Observable<JwtTokenResponse>
+    suspend fun signIn(request: SignInRequest): JwtTokenResponse
 }
 
 class AuthApiExecutorImpl(authApi: AuthApi) : ApiExecutor<AuthApi>(authApi), AuthApiExecutor {
-    override fun signUp(request: SignUpRequest): Observable<Nothing> = executeService { signUp(request) }
+    override suspend fun signUp(request: SignUpRequest) = executeService { signUpAsync(request) }
 
-    override fun signIn(request: SignInRequest): Observable<JwtTokenResponse> = executeService { signIn(request) }
+    override suspend fun signIn(request: SignInRequest) = executeService { signInAsync(request) }
 }
