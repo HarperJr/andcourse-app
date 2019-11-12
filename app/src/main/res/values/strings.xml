@@ -1,6 +1,32 @@
 <resources>
     <string name="app_name">andcourse</string>
-    <string name="auth_btn_text">SignUp</string>
-    <string name="auth_input_email_text">Email</string>
-    <string name="auth_input_pass_text">Password</string>
+
+    <!--SignInFragment-->
+    <string name="signin_btn_accept_text">SignIn</string>
+    <string name="signin_input_email_text">Email</string>
+    <string name="signin_input_pass_text">Password</string>
+    <string name="signin_with_google">Sign in with google</string>
+    <string name="signin_text">SignIn</string>
+    <string name="signin_goto_signup">Don\'t have an account yet? SignUp</string>
+
+    <!--IntroFragment-->
+    <string name="intro_pass_btn_text">Pass</string>
+    <string name="intro_test_description">Test description</string>
+
+    <!--SignUpFragment-->
+    <string name="signup_date_birth">Date birth</string>
+    <string name="signup_date_email">Email</string>
+    <string name="signup_case_male">Male</string>
+    <string name="signup_case_female">Female</string>
+    <string name="signup_password">Password</string>
+    <string name="signup_rep_password">Repeat password</string>
+    <string name="signup_accept">SignUp</string>
+
+    <!--QuestionnaireIntroduceFragment-->
+    <string name="questionnaire_intro_begin">Begin</string>
+    <string name="questionnaire_intro_description">Description</string>
+
+    <!-- QuestionsAdapter-->
+    <string name="item_question_no_btn">No</string>
+    <string name="item_question_yes_btn">Yes</string>
 </resources>

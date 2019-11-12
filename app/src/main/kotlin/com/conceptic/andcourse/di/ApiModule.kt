@@ -6,13 +6,15 @@ import com.conceptic.andcourse.data.api.auth.AuthApiExecutor
 import com.conceptic.andcourse.data.api.auth.AuthApiExecutorImpl
 import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
+import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
+import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutorImpl
 import com.conceptic.andcourse.data.api.support.Interceptors
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -31,7 +33,8 @@ object ApiModule {
 
         single {
             OkHttpClient.Builder()
-                .addInterceptor { chain -> Interceptors.interceptJwtToken(chain, get()) }
+                .addInterceptor(Interceptors.loggingInterceptor())
+                .addInterceptor(Interceptors.jwtTokenInterceptor(get()))
                 .callTimeout(CALL_TIMEOUT, TimeUnit.MILLISECONDS)
                 .build()
         }
@@ -41,7 +44,7 @@ object ApiModule {
                 .client(get<OkHttpClient>())
                 .baseUrl(BuildConfig.API_URL)
                 .addConverterFactory(GsonConverterFactory.create(get()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
                 .build()
         }
 
@@ -56,7 +59,9 @@ object ApiModule {
          * ApiExecutors instances are declared here
          */
         single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
+
+        single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get()) }
     }
 
-    private const val CALL_TIMEOUT = 100000L
+    private const val CALL_TIMEOUT = 10000L
 }

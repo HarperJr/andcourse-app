@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button" />
+
+    <style name="AppTheme.Button.GoogleStyledButton" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="iconPadding">24dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="iconTint">@null</item>
+        <item name="android:backgroundTintMode">add</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
 </resources>

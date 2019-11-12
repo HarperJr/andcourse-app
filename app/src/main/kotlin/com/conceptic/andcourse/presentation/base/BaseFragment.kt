@@ -22,11 +22,6 @@ abstract class BaseFragment<VM : BaseViewModel>(@LayoutRes layout: Int) : Fragme
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.onStart()
-    }
-
     protected fun showSnack(
         message: String, type: Int,
         @StringRes actionRes: Int? = null, action: ((view: View) -> Unit)? = null
