@@ -1,6 +1,5 @@
 package com.conceptic.andcourse.data.repos
 
-import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
 import com.conceptic.andcourse.data.database.dao.QuestionDao
 import com.conceptic.andcourse.data.database.mapping.QuestionMapper
 import com.conceptic.andcourse.data.model.Question
@@ -11,7 +10,6 @@ interface QuestionRepository {
 }
 
 class QuestionRepositoryImpl(
-    private val questionnaireApiExecutor: QuestionnaireApiExecutor,
     private val dao: QuestionDao
 ) : QuestionRepository {
     override suspend fun storeQuestions(questions: List<Question>) {

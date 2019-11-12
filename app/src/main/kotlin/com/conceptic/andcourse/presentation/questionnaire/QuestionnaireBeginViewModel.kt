@@ -12,16 +12,14 @@ class QuestionnaireBeginViewModel(
 ) : BaseViewModel() {
     val beginSuccessLiveData = MutableLiveData<Unit>()
 
-    fun onBeginBtnClicked() {
-        viewModelScope.launch {
-            runCatching {
-                beginQuestionnaireCase.execute(Unit)
-            }.onSuccess { beginSuccessLiveData.value = Unit }
-                .onFailure { throwable ->
-                    ApiException.letFromThrowable(throwable) {
-                        errorMessages.postValue(it)
-                    }
+    fun onBeginBtnClicked() = viewModelScope.launch {
+        runCatching {
+            beginQuestionnaireCase.execute(Unit)
+        }.onSuccess { beginSuccessLiveData.postValue(Unit) }
+            .onFailure { throwable ->
+                ApiException.letFromThrowable(throwable) {
+                    errorMessages.postValue(it)
                 }
-        }
+            }
     }
 }

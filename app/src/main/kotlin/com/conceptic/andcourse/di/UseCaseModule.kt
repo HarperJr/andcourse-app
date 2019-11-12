@@ -12,6 +12,6 @@ object UseCaseModule {
         factory { SignUpCase(get()) }
 
         //Questionnaire
-        factory { BeginQuestionnaireCase(get(), get()) }
+        factory { BeginQuestionnaireCase(get()) }
     }
 }
