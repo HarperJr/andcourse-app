@@ -8,4 +8,7 @@ import com.conceptic.andcourse.data.database.entity.QuestionEntity
 abstract class QuestionDao : BaseDao<QuestionEntity, String> {
     @Query("SELECT * FROM Questions")
     abstract suspend fun all(): List<QuestionEntity>
+
+    @Query("DELETE FROM Questions")
+    abstract suspend fun drop()
 }

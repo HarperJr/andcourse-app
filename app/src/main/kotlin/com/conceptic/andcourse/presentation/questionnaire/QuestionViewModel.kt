@@ -8,22 +8,23 @@ import com.conceptic.andcourse.data.repos.QuestionRepository
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.questionnaire.NextQuestionCase
 import com.conceptic.andcourse.usecase.questionnaire.NextQuestionParams
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class QuestionViewModel(
     questionRepository: QuestionRepository,
     private val nextQuestionCase: NextQuestionCase
 ) : BaseViewModel() {
-    val questionsLiveData = liveData {
+    val questionsLiveData = liveData(viewModelScope.coroutineContext) {
         coroutineScope {
-            val questions = async(Dispatchers.IO) { questionRepository.questions() }
-            withContext(Dispatchers.Main) {
-                runCatching { questions.await() }
-                    .onSuccess { questions -> emit(questions) }
-                    .onFailure { throwable ->
-                        ApiException.letFromThrowable(throwable) { message -> errorMessages.value = message }
-                    }
-            }
+            runCatching {
+                withContext(Dispatchers.IO) { questionRepository.questions() }
+            }.onSuccess { questions -> emit(questions) }
+                .onFailure { throwable ->
+                    ApiException.letFromThrowable(throwable) { message -> errorMessages.value = message }
+                }
         }
     }
 
@@ -32,7 +33,7 @@ class QuestionViewModel(
             nextQuestionCase.execute(NextQuestionParams())
         }.onSuccess { }
             .onFailure { throwable ->
-                ApiException.letFromThrowable(throwable) { errorMessages.value = it }
+                ApiException.letFromThrowable(throwable) { errorMessages.postValue(it) }
             }
     }
 }

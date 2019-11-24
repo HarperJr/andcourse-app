@@ -12,6 +12,7 @@ class SignInViewModel(
     private val signInCase: SignInCase
 ) : BaseViewModel() {
     val signInSuccessLiveData = MutableLiveData<Unit>()
+    val loadingProgressLiveData = MutableLiveData<Boolean>()
 
     private val signInJob = SupervisorJob()
     private val signInScope = CoroutineScope(viewModelScope.coroutineContext + signInJob)
@@ -19,6 +20,7 @@ class SignInViewModel(
     fun onSignInBtnClicked(email: String, pass: String) {
         signInJob.cancelChildren()
         signInScope.launch(Dispatchers.IO) {
+            loadingProgressLiveData.postValue(true)
             runCatching {
                 signInCase.execute(SignInParams(email, pass))
             }.onSuccess {
@@ -28,6 +30,7 @@ class SignInViewModel(
                     errorMessages.postValue(it)
                 }
             }
+            loadingProgressLiveData.postValue(false)
         }
     }
 }

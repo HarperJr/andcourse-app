@@ -21,7 +21,9 @@ class App : Application() {
         initKoin()
     }
 
-    private fun initTimber() = Timber.DebugTree()
+    private fun initTimber() {
+        Timber.plant(Timber.DebugTree())
+    }
 
     private fun initKoin() {
         startKoin {

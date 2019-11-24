@@ -14,17 +14,16 @@ class SignUpViewModel(
     private val signUpCase: SignUpCase
 ) : BaseViewModel() {
     val signUpSuccessLiveData = MutableLiveData<Unit>()
+    val loadingProgressLiveData = MutableLiveData<Boolean>()
 
     private val signUpJob = SupervisorJob()
     private val signUpScope = CoroutineScope(viewModelScope.coroutineContext + signUpJob)
 
-    fun onSignUpBtnClicked(
-        email: String, dateBirth: Date,
-        password: String, gender: Gender
-    ) {
+    fun onSignUpBtnClicked(email: String, dateBirth: Date, password: String, gender: Gender) {
         signUpJob.cancelChildren()
         signUpScope.launch(Dispatchers.IO) {
-            runCatching {
+            loadingProgressLiveData.postValue(true)
+            loadingProgressLiveData.runCatching {
                 signUpCase
                     .execute(SignUpParams(email, password, dateBirth, gender))
             }.onSuccess {
@@ -34,6 +33,7 @@ class SignUpViewModel(
                     errorMessages.postValue(it)
                 }
             }
+            loadingProgressLiveData.postValue(false)
         }
     }
 }

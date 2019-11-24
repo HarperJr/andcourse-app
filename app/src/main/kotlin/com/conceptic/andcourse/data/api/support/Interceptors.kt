@@ -22,7 +22,7 @@ object Interceptors {
         override fun log(message: String) {
             Timber.tag(OK_HTTP_CLIENT_TAG).d(message)
         }
-    })
+    }).apply { level = HttpLoggingInterceptor.Level.BODY }
 
     private const val OK_HTTP_CLIENT_TAG = "OkHttp"
     private const val HEADER_AUTHORIZATION = "Authorization"

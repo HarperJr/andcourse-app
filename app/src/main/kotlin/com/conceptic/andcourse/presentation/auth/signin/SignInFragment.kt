@@ -7,6 +7,7 @@ import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.ext.createScope
 import com.conceptic.andcourse.presentation.ext.validate
+import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
 import kotlinx.android.synthetic.main.fragment_signin.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
@@ -31,6 +32,7 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
         viewModel.signInSuccessLiveData.observe({ lifecycle }) {
             findNavController().navigate(R.id.action_signinFragment_to_questionnaireBeginFragment)
         }
+        viewModel.loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +48,8 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
             findNavController().navigate(R.id.action_signinFragment_to_signUpFragment)
         }
     }
+
+    private fun setProgressVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)
 
     companion object {
         private const val SIGNIN_SCOPE = "signin_scope"

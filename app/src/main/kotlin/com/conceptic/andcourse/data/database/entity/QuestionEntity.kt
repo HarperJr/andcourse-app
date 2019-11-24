@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Questions")
 data class QuestionEntity(
     @PrimaryKey val id: String,
+    val order: Int,
     val content: String
 )

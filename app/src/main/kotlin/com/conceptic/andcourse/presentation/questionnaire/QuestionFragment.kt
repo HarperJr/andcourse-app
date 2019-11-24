@@ -14,8 +14,10 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
     override val scope: Scope = createScope(QUESTION_SCOPE)
     override val viewModel: QuestionViewModel by scope.viewModel(this)
 
-    private val adapter = QuestionsAdapter(requireContext()) { answer ->
-        viewModel.onQuestionAnswered(answer)
+    private val adapter by lazy {
+        QuestionsAdapter(requireContext()) { answer ->
+            viewModel.onQuestionAnswered(answer)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

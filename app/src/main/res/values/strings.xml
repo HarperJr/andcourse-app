@@ -29,4 +29,5 @@
     <!-- QuestionsAdapter-->
     <string name="item_question_no_btn">No</string>
     <string name="item_question_yes_btn">Yes</string>
+    <string name="dialog_progress_loading">Loading</string>
 </resources>
