@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/beginQuestionnaireFragment"
-        android:name="com.conceptic.andcourse.presentation.questionnaire.QuestionnaireBeginFragment"
+        android:name="com.conceptic.andcourse.presentation.questionnaire.begin.QuestionnaireBeginFragment"
         android:label="BeginQuestionnaireFragment">
         <action
             android:id="@+id/action_questionnaireBeginFragment_to_questionFragment"
@@ -42,6 +42,6 @@
     </fragment>
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.conceptic.andcourse.presentation.questionnaire.QuestionFragment"
+        android:name="com.conceptic.andcourse.presentation.questionnaire.question.QuestionFragment"
         android:label="QuestionFragment" />
 </navigation>

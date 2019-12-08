@@ -15,6 +15,9 @@ class BeginQuestionnaireCase(
             .beginQuestionnaire()
         val questions = response.questions
             .map { Question(id = it.id, order = it.order, content = it.content) }
-        questionRepository.storeQuestions(questions)
+        questionRepository.run {
+            drop()
+            storeQuestions(questions)
+        }
     }
 }

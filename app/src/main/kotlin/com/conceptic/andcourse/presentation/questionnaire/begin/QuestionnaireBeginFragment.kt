@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.presentation.questionnaire
+package com.conceptic.andcourse.presentation.questionnaire.begin
 
 import android.os.Bundle
 import android.view.View

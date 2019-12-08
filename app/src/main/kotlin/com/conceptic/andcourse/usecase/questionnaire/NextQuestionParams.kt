@@ -1,5 +1,3 @@
 package com.conceptic.andcourse.usecase.questionnaire
 
-class NextQuestionParams {
-
-}
+data class NextQuestionParams(val answer: Int)

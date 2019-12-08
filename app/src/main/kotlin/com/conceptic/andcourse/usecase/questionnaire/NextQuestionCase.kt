@@ -7,9 +7,9 @@ import kotlinx.coroutines.coroutineScope
 
 class NextQuestionCase(
     private val questionnaireApiExecutor: QuestionnaireApiExecutor
-) : UseCase<NextQuestionParams, String> {
-    override suspend fun execute(param: NextQuestionParams): String = coroutineScope {
-        questionnaireApiExecutor.nextQuestion(NextQuestionRequest(0, 0L))
-        "Stub"
+) : UseCase<NextQuestionParams, String?> {
+    override suspend fun execute(param: NextQuestionParams): String? = coroutineScope {
+        val response = questionnaireApiExecutor.nextQuestion(NextQuestionRequest(param.answer))
+        response.nextQuestion
     }
 }

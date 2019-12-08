@@ -22,6 +22,8 @@ abstract class BaseFragment<VM : BaseViewModel>(@LayoutRes layout: Int) : Fragme
         }
     }
 
+    open fun onBackPressed(): Boolean = true
+
     protected fun showSnack(
         message: String, type: Int,
         @StringRes actionRes: Int? = null, action: ((view: View) -> Unit)? = null

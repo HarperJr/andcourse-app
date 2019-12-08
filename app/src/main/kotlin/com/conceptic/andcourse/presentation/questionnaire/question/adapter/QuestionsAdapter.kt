@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.presentation.questionnaire.adapter
+package com.conceptic.andcourse.presentation.questionnaire.question.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.item_question.view.*
 class QuestionsAdapter(
     private val context: Context,
     private val onAnswerBtnClickedListener: (Answer) -> Unit
-) :
-    RecyclerView.Adapter<QuestionsAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<QuestionsAdapter.ViewHolder>() {
+
     var items = listOf<Question>()
         set(value) {
             field = value

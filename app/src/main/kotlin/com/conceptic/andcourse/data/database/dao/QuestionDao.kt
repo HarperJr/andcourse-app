@@ -11,4 +11,7 @@ abstract class QuestionDao : BaseDao<QuestionEntity, String> {
 
     @Query("DELETE FROM Questions")
     abstract suspend fun drop()
+
+    @Query("SELECT * FROM Questions WHERE id = :id")
+    abstract suspend fun find(id: String): QuestionEntity?
 }

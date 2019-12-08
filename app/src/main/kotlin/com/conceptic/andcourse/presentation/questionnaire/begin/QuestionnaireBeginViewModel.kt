@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.presentation.questionnaire
+package com.conceptic.andcourse.presentation.questionnaire.begin
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

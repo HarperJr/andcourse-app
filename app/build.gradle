@@ -13,7 +13,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField('String', 'API_URL', '"http://192.168.43.43:8088"')
+        buildConfigField('String', 'API_URL', '"http://192.168.42.254:8088"')
     }
 
     buildTypes {
@@ -66,6 +66,9 @@ dependencies {
 
     //OkHttp3 logging interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
+
+    //OkHttp3 CookieJar
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
