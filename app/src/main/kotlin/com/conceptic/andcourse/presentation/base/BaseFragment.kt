@@ -6,16 +6,12 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import org.koin.androidx.scope.bindScope
-import org.koin.core.scope.Scope
 
 abstract class BaseFragment<VM : BaseViewModel>(@LayoutRes layout: Int) : Fragment(layout) {
-    protected abstract val scope: Scope
     protected abstract val viewModel: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindScope(scope)
 
         viewModel.errorMessageLiveData.observe({ lifecycle }) { message ->
             showSnack(message, Snackbar.LENGTH_SHORT)

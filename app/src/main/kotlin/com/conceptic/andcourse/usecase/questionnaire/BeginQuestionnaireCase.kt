@@ -17,7 +17,7 @@ class BeginQuestionnaireCase(
             .map { Question(id = it.id, order = it.order, content = it.content) }
         questionRepository.run {
             drop()
-            storeQuestions(questions)
+            store(questions)
         }
     }
 }

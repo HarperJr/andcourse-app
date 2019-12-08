@@ -3,6 +3,7 @@ package com.conceptic.andcourse.di
 import com.conceptic.andcourse.usecase.auth.signin.SignInCase
 import com.conceptic.andcourse.usecase.auth.signup.SignUpCase
 import com.conceptic.andcourse.usecase.questionnaire.BeginQuestionnaireCase
+import com.conceptic.andcourse.usecase.questionnaire.CompleteQuestionnaireCase
 import com.conceptic.andcourse.usecase.questionnaire.NextQuestionCase
 import org.koin.dsl.module
 
@@ -15,5 +16,6 @@ object UseCaseModule {
         //Questionnaire
         factory { BeginQuestionnaireCase(get(), get()) }
         factory { NextQuestionCase(get()) }
+        factory { CompleteQuestionnaireCase(get(), get()) }
     }
 }

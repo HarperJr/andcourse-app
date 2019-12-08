@@ -11,7 +11,7 @@ interface QuestionnaireApiExecutor {
 
     suspend fun nextQuestion(request: NextQuestionRequest): QuestionNextResponse
 
-    suspend fun completeQuestionnaire(request: CompleteQuestionnaireRequest): CompleteQuestionnaireResponse
+    suspend fun completeQuestionnaire(): CompleteQuestionnaireResponse
 }
 
 class QuestionnaireApiExecutorImpl(questionnaireApi: QuestionnaireApi) :
@@ -20,6 +20,5 @@ class QuestionnaireApiExecutorImpl(questionnaireApi: QuestionnaireApi) :
 
     override suspend fun nextQuestion(request: NextQuestionRequest) = executeService { nextQuestionAsync(request) }
 
-    override suspend fun completeQuestionnaire(request: CompleteQuestionnaireRequest) =
-        executeService { completeQuestionnaireAsync(request) }
+    override suspend fun completeQuestionnaire() = executeService { completeQuestionnaireAsync() }
 }

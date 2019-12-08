@@ -43,5 +43,13 @@
     <fragment
         android:id="@+id/questionFragment"
         android:name="com.conceptic.andcourse.presentation.questionnaire.question.QuestionFragment"
-        android:label="QuestionFragment" />
+        android:label="QuestionFragment" >
+        <action
+            android:id="@+id/action_questionFragment_to_questionnaireCompletionFragment"
+            app:destination="@id/questionnaireCompletionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaireCompletionFragment"
+        android:name="com.conceptic.andcourse.presentation.questionnaire.completion.QuestionnaireCompletionFragment"
+        android:label="QuestionnaireCompletionFragment" />
 </navigation>

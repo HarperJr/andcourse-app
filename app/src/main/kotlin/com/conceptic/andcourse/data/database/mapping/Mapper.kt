@@ -1,7 +1,7 @@
 package com.conceptic.andcourse.data.database.mapping
 
-interface Mapper<T, E> {
-    fun toModel(t: T): E
+interface Mapper<Entity, Model> {
+    fun toModel(entity: Entity): Model
 
-    fun toEntity(e: E): T
+    fun toEntity(model: Model): Entity
 }

@@ -1,5 +1,5 @@
 package com.conceptic.andcourse.usecase
 
-interface UseCase<T, E> {
-    suspend fun execute(param: T): E
+interface UseCase<P, R> {
+    suspend fun execute(param: P): R
 }

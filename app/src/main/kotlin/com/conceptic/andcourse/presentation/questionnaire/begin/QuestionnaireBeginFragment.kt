@@ -5,15 +5,13 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.base.BaseFragment
-import com.conceptic.andcourse.presentation.ext.createScope
-import kotlinx.android.synthetic.main.fragment_qurstionnaire_intro.*
+import kotlinx.android.synthetic.main.fragment_questionnaire_intro.*
+import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.scope.Scope
 
 class QuestionnaireBeginFragment :
-    BaseFragment<QuestionnaireBeginViewModel>(R.layout.fragment_qurstionnaire_intro) {
-    override val scope: Scope = createScope(QUESTIONNAIRE_BEGIN_SCOPE)
-    override val viewModel: QuestionnaireBeginViewModel by scope.viewModel(this)
+    BaseFragment<QuestionnaireBeginViewModel>(R.layout.fragment_questionnaire_intro) {
+    override val viewModel: QuestionnaireBeginViewModel by currentScope.viewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

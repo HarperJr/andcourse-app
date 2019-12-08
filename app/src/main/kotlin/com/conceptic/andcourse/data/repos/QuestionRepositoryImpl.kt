@@ -7,7 +7,7 @@ import kotlinx.coroutines.coroutineScope
 
 interface QuestionRepository {
     suspend fun drop()
-    suspend fun storeQuestions(questions: List<Question>)
+    suspend fun store(questions: List<Question>)
     suspend fun questions(): List<Question>
     suspend fun find(question: String): Question?
 }
@@ -17,7 +17,7 @@ class QuestionRepositoryImpl(
 ) : QuestionRepository {
     override suspend fun drop() = coroutineScope { dao.drop() }
 
-    override suspend fun storeQuestions(questions: List<Question>) = coroutineScope {
+    override suspend fun store(questions: List<Question>) = coroutineScope {
         dao.insert(questions.map { QuestionMapper.toEntity(it) })
     }
 

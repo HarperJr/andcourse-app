@@ -5,16 +5,14 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.base.BaseFragment
-import com.conceptic.andcourse.presentation.ext.createScope
 import com.conceptic.andcourse.presentation.ext.validate
 import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
 import kotlinx.android.synthetic.main.fragment_signin.*
+import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.scope.Scope
 
 class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
-    override val scope: Scope = createScope(SIGNIN_SCOPE)
-    override val viewModel: SignInViewModel by scope.viewModel(this)
+    override val viewModel: SignInViewModel by currentScope.viewModel(this)
 
     private val email
         get() = signin_input_email validate {

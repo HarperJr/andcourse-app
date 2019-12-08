@@ -7,6 +7,8 @@ import com.conceptic.andcourse.presentation.auth.signup.SignUpFragment
 import com.conceptic.andcourse.presentation.auth.signup.SignUpViewModel
 import com.conceptic.andcourse.presentation.questionnaire.begin.QuestionnaireBeginFragment
 import com.conceptic.andcourse.presentation.questionnaire.begin.QuestionnaireBeginViewModel
+import com.conceptic.andcourse.presentation.questionnaire.completion.QuestionnaireCompletionFragment
+import com.conceptic.andcourse.presentation.questionnaire.completion.QuestionnaireCompletionViewModel
 import com.conceptic.andcourse.presentation.questionnaire.question.QuestionFragment
 import com.conceptic.andcourse.presentation.questionnaire.question.QuestionViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -38,6 +40,12 @@ object AppModule {
         scope(named<QuestionFragment>()) {
             viewModel {
                 QuestionViewModel(get(), get())
+            }
+        }
+
+        scope(named<QuestionnaireCompletionFragment>()) {
+            viewModel {
+                QuestionnaireCompletionViewModel(get())
             }
         }
     }

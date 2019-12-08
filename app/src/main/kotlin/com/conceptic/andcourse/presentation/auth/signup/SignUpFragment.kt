@@ -7,18 +7,16 @@ import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Gender
 import com.conceptic.andcourse.presentation.base.BaseFragment
-import com.conceptic.andcourse.presentation.ext.createScope
 import com.conceptic.andcourse.presentation.ext.validate
 import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
 import kotlinx.android.synthetic.main.fragment_signup.*
+import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.scope.Scope
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
-    override val scope: Scope = createScope(SIGNUP_SCOPE)
-    override val viewModel: SignUpViewModel by scope.viewModel(this)
+    override val viewModel: SignUpViewModel by currentScope.viewModel(this)
 
     private val calendar = Calendar.getInstance(TimeZone.getDefault())
     private val dateFormatter = SimpleDateFormat("MM.dd.yyyy", Locale.getDefault())

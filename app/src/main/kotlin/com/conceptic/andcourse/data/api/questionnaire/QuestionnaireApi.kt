@@ -14,5 +14,5 @@ interface QuestionnaireApi {
     fun nextQuestionAsync(@Body request: NextQuestionRequest): Deferred<Response<QuestionNextResponse>>
 
     @POST("questionnaire/complete")
-    fun completeQuestionnaireAsync(@Body request: CompleteQuestionnaireRequest): Deferred<Response<CompleteQuestionnaireResponse>>
+    fun completeQuestionnaireAsync(): Deferred<Response<CompleteQuestionnaireResponse>>
 }

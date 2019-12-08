@@ -5,15 +5,15 @@ import com.conceptic.andcourse.data.model.Question
 
 object QuestionMapper :
     Mapper<QuestionEntity, Question> {
-    override fun toModel(t: QuestionEntity): Question = Question(
-        id = t.id,
-        order = t.order,
-        content = t.content
+    override fun toModel(entity: QuestionEntity): Question = Question(
+        id = entity.id,
+        order = entity.order,
+        content = entity.content
     )
 
-    override fun toEntity(e: Question): QuestionEntity = QuestionEntity(
-        id = e.id,
-        order = e.order,
-        content = e.content
+    override fun toEntity(model: Question): QuestionEntity = QuestionEntity(
+        id = model.id,
+        order = model.order,
+        content = model.content
     )
 }
