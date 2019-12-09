@@ -18,19 +18,19 @@ class IntroFragment :
     private val introPages = listOf(
         IntroPageItem(
             R.drawable.test_description,
-            R.string.intro_test_description
+            R.string.intro_questionnaire_description
         ),
         IntroPageItem(
             R.drawable.test_description,
-            R.string.intro_test_description
+            R.string.intro_feature_1_description
         ),
         IntroPageItem(
             R.drawable.test_description,
-            R.string.intro_test_description
+            R.string.intro_feature_2_description
         ),
         IntroPageItem(
             R.drawable.test_description,
-            R.string.intro_test_description
+            R.string.intro_feature_3_description
         )
     )
 
