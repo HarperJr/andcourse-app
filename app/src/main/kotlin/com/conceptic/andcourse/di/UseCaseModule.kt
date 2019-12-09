@@ -5,7 +5,8 @@ import com.conceptic.andcourse.usecase.auth.signup.SignUpCase
 import com.conceptic.andcourse.usecase.questionnaire.intro.BeginQuestionnaireCase
 import com.conceptic.andcourse.usecase.questionnaire.completion.CompleteQuestionnaireCase
 import com.conceptic.andcourse.usecase.questionnaire.next.NextQuestionCase
-import com.conceptic.andcourse.usecase.questionnaire.summary.SummaryUseCase
+import com.conceptic.andcourse.usecase.questionnaire.summary.SummaryCase
+import com.conceptic.andcourse.usecase.statistics.StatisticsCase
 import org.koin.dsl.module
 
 object UseCaseModule {
@@ -22,6 +23,8 @@ object UseCaseModule {
 
         factory { CompleteQuestionnaireCase(get(), get()) }
 
-        factory { SummaryUseCase(get()) }
+        factory { SummaryCase(get()) }
+
+        factory { StatisticsCase(get()) }
     }
 }

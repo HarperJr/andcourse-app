@@ -9,6 +9,9 @@ import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutorImpl
+import com.conceptic.andcourse.data.api.statistics.StatisticsApi
+import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutor
+import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutorImpl
 import com.conceptic.andcourse.data.api.support.Interceptors
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
@@ -64,12 +67,16 @@ object ApiModule {
 
         single<QuestionnaireApi> { get<Retrofit>().create(QuestionnaireApi::class.java) }
 
+        single<StatisticsApi> { get<Retrofit>().create(StatisticsApi::class.java) }
+
         /**
          * ApiExecutors instances are declared here
          */
         single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
 
         single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get()) }
+
+        single<StatisticsApiExecutor> { StatisticsApiExecutorImpl(get()) }
     }
 
     private const val CALL_TIMEOUT = 10000L
