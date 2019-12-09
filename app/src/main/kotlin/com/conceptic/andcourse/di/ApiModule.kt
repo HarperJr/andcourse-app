@@ -12,6 +12,7 @@ import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutorIm
 import com.conceptic.andcourse.data.api.statistics.StatisticsApi
 import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutor
 import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutorImpl
+import com.conceptic.andcourse.data.api.support.ConnectivityHandler
 import com.conceptic.andcourse.data.api.support.Interceptors
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
@@ -60,6 +61,8 @@ object ApiModule {
                 .build()
         }
 
+        single { ConnectivityHandler(get()) }
+
         /**
          * Api instances are declared here
          */
@@ -72,11 +75,11 @@ object ApiModule {
         /**
          * ApiExecutors instances are declared here
          */
-        single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
+        single<AuthApiExecutor> { AuthApiExecutorImpl(get(), get()) }
 
-        single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get()) }
+        single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get(), get()) }
 
-        single<StatisticsApiExecutor> { StatisticsApiExecutorImpl(get()) }
+        single<StatisticsApiExecutor> { StatisticsApiExecutorImpl(get(), get()) }
     }
 
     private const val CALL_TIMEOUT = 10000L

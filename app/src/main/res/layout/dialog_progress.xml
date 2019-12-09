@@ -13,15 +13,15 @@
 
         <TextView
             android:id="@+id/loading"
-            style="@style/TextAppearance.AppCompat.Display1"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:text="@string/dialog_progress_loading"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/progress"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
@@ -29,12 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginStart="32dp"
+            app:layout_constraintEnd_toStartOf="@id/loading"
             app:layout_constraintBottom_toBottomOf="@id/loading"
-            app:layout_constraintStart_toEndOf="@+id/loading"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </FrameLayout>
