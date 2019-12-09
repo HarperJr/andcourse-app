@@ -21,12 +21,17 @@ abstract class BaseFragment<VM : BaseViewModel>(@LayoutRes layout: Int) : Fragme
     open fun onBackPressed(): Boolean = true
 
     protected fun showSnack(
-        message: String, type: Int,
+        @StringRes messageRes: Int, type: Int,
         @StringRes actionRes: Int? = null, action: ((view: View) -> Unit)? = null
     ) {
-        return Snackbar.make(requireView(), message, type)
-            .also { snack ->
-                actionRes?.let { res -> snack.setAction(res) { action?.invoke(it) } }
-            }.show()
+        return showSnack(getString(messageRes), type, actionRes, action)
     }
+
+    protected fun showSnack(
+        message: String, type: Int,
+        @StringRes actionRes: Int? = null, action: ((view: View) -> Unit)? = null
+    ) = Snackbar.make(requireView(), message, type)
+        .also { snack ->
+            actionRes?.let { res -> snack.setAction(res) { action?.invoke(it) } }
+        }.show()
 }

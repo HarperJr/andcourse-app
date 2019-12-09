@@ -8,8 +8,9 @@ import com.conceptic.andcourse.data.model.Answer
 import com.conceptic.andcourse.data.model.Question
 import com.conceptic.andcourse.data.repos.QuestionRepository
 import com.conceptic.andcourse.presentation.base.BaseViewModel
-import com.conceptic.andcourse.usecase.questionnaire.NextQuestionCase
-import com.conceptic.andcourse.usecase.questionnaire.NextQuestionParams
+import com.conceptic.andcourse.usecase.questionnaire.completion.CompleteQuestionnaireCase
+import com.conceptic.andcourse.usecase.questionnaire.next.NextQuestionCase
+import com.conceptic.andcourse.usecase.questionnaire.next.NextQuestionParams
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import kotlinx.coroutines.withContext
 
 class QuestionViewModel(
     private val questionRepository: QuestionRepository,
-    private val nextQuestionCase: NextQuestionCase
+    private val nextQuestionCase: NextQuestionCase,
+    private val completeQuestionnaireCase: CompleteQuestionnaireCase
 ) : BaseViewModel() {
     val questionsLiveData = liveData(viewModelScope.coroutineContext) {
         coroutineScope {
@@ -38,10 +40,20 @@ class QuestionViewModel(
         }.onSuccess { nextQuestion ->
             nextQuestion?.let {
                 currentQuestionLiveData.postValue(questionRepository.find(it))
-            } ?: questionnaireCompleteLiveData.postValue(Unit)
+            } ?: completeQuestionnaire()
         }.onFailure { throwable ->
             ApiException.letFromThrowable(throwable) { errorMessages.postValue(it) }
         }
     }
-}
 
+    private suspend fun completeQuestionnaire() {
+        coroutineScope {
+            runCatching {
+                completeQuestionnaireCase.execute(Unit)
+            }.onSuccess { questionnaireCompleteLiveData.postValue(Unit) }
+                .onFailure { throwable ->
+                    ApiException.letFromThrowable(throwable) { errorMessages.postValue(it) }
+                }
+        }
+    }
+}

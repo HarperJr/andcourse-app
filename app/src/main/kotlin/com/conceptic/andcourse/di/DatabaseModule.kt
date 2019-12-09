@@ -22,12 +22,14 @@ object DatabaseModule {
          * Dao are declared here
          */
         factory { get<Database>().questionDao() }
+
         factory { get<Database>().featureDao() }
 
         /**
          * Repositories are declared here
          */
         factory<QuestionRepository> { QuestionRepositoryImpl(get()) }
+
         factory<FeatureRepository> { FeatureRepositoryImpl(get()) }
     }
 }

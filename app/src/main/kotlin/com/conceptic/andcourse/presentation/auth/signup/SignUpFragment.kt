@@ -59,8 +59,6 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         signup_input_date_birth_value.setOnClickListener { showDatePicker() }
         signup_btn_accept.setOnClickListener {
             validate(email, dateBirth, password, repeatPassword) {
@@ -88,9 +86,5 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
                 signup_input_date_birth_value.setText(dateFormatter.format(pickedDate))
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
-    }
-
-    companion object {
-        private const val SIGNUP_SCOPE = "signup_scope"
     }
 }

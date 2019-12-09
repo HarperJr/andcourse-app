@@ -30,7 +30,6 @@ object ApiModule {
         single {
             GsonBuilder()
                 .serializeNulls()
-                .setPrettyPrinting()
                 .disableHtmlEscaping()
                 .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create()

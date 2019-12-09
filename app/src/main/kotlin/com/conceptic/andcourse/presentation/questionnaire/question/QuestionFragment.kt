@@ -29,7 +29,10 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
 
         viewModel.apply {
             questionsLiveData.observe({ lifecycle }) { questions -> adapter.items = questions }
-            questionnaireCompleteLiveData.observe({ lifecycle }) { findNavController().navigate(R.id.action_questionFragment_to_questionnaireCompletionFragment) }
+            questionnaireCompleteLiveData.observe({ lifecycle }) {
+                findNavController().navigate(R.id.action_questionFragment_to_summaryFragment)
+            }
+
             currentQuestionLiveData.observe({ lifecycle }) { currentQuestion ->
                 question_view_pager.setCurrentItem(currentQuestion.order, true)
             }
@@ -45,8 +48,7 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
 
     override fun onBackPressed(): Boolean {
         if (!backPressed) {
-            Snackbar.make(question_view_pager, R.string.questionnaire_back_pressed_message, Snackbar.LENGTH_SHORT)
-                .show()
+            showSnack(R.string.questionnaire_back_pressed_message, Snackbar.LENGTH_SHORT)
             handler.postDelayed({ backPressed = false }, BACK_PRESSED_DELAY_MILLIS)
             backPressed = true
         }
@@ -54,7 +56,6 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
     }
 
     companion object {
-        private const val QUESTION_SCOPE = "question_scope"
         private const val BACK_PRESSED_DELAY_MILLIS = 2500L
     }
 }

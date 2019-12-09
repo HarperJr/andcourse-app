@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.presentation.intro
+package com.conceptic.andcourse.presentation.questionnaire.intro.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

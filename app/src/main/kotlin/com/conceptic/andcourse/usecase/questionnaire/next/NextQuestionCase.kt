@@ -1,4 +1,4 @@
-package com.conceptic.andcourse.usecase.questionnaire
+package com.conceptic.andcourse.usecase.questionnaire.next
 
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
 import com.conceptic.andcourse.data.api.questionnaire.model.NextQuestionRequest

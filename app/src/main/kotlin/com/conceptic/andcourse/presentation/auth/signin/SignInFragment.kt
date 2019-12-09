@@ -28,14 +28,12 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
         super.onCreate(savedInstanceState)
 
         viewModel.signInSuccessLiveData.observe({ lifecycle }) {
-            findNavController().navigate(R.id.action_signinFragment_to_questionnaireBeginFragment)
+            findNavController().navigate(R.id.action_signInFragment_to_introFragment)
         }
         viewModel.loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         signin_btn_signin.setOnClickListener {
             validate(email, password) {
                 viewModel.onSignInBtnClicked(email.value, password.value)
@@ -48,8 +46,4 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     }
 
     private fun setProgressVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)
-
-    companion object {
-        private const val SIGNIN_SCOPE = "signin_scope"
-    }
 }
