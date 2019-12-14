@@ -22,6 +22,6 @@ class SummaryCase(
                     Feature(FeatureType.of(feat.featureType), feat.featureDescription, feat.points)
                 }
             }
-        } else emptyList()
+        } else summary
     }
 }

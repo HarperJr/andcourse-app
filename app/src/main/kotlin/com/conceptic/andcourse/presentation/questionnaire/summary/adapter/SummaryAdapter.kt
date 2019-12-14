@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Feature
+import kotlinx.android.synthetic.main.item_summary_widget.view.*
 
 class SummaryAdapter : RecyclerView.Adapter<SummaryAdapter.ViewHolder>() {
     var items: List<Feature> = emptyList()
@@ -26,7 +27,7 @@ class SummaryAdapter : RecyclerView.Adapter<SummaryAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Feature) = with(itemView) {
-
+            item_summary_title.text = context.getString(item.type.description)
         }
     }
 }

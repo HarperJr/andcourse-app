@@ -37,4 +37,12 @@
     <string name="no_summary_description">Here you will see your summary.\nPlease press the button below to pass the questionnaire</string>
     <string name="summary_pass_questionnaire_btn">Pass questionnaire</string>
     <string name="summary">Summary</string>
+
+    <!--FeatureType-->
+    <string name="extraversion_introversion">Extraversion/Introversion</string>
+    <string name="rigidity_plasticity">Rigidity/Plasticity</string>
+    <string name="excitability_balance">Excitability/Balance</string>
+    <string name="reaction_tempo">Reaction/Tempo</string>
+    <string name="activity_passivity">Activity/Passivity</string>
+    <string name="honesty_privacy">Honesty/Privacy</string>
 </resources>
