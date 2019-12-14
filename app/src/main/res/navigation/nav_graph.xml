@@ -58,6 +58,10 @@
     <fragment
         android:id="@+id/summaryFragment"
         android:name="com.conceptic.andcourse.presentation.questionnaire.summary.SummaryFragment"
-        android:label="SummaryFragment" />
+        android:label="SummaryFragment">
+        <action
+            android:id="@+id/action_summaryFragment_to_introFragment"
+            app:destination="@id/introFragment" />
+    </fragment>
 
 </navigation>

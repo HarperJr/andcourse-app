@@ -6,6 +6,7 @@ import com.conceptic.andcourse.data.api.ApiException
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.auth.signin.SignInCase
 import com.conceptic.andcourse.usecase.auth.signin.SignInParams
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.coroutines.*
 
 class SignInViewModel(
@@ -32,5 +33,13 @@ class SignInViewModel(
             }
             loadingProgressLiveData.postValue(false)
         }
+    }
+
+    fun onSignedInWithGoogle(googleAccount: GoogleSignInAccount) {
+        signInJob.cancelChildren()
+        signInScope.launch(Dispatchers.IO) {
+
+        }
+        signInSuccessLiveData.value = Unit
     }
 }

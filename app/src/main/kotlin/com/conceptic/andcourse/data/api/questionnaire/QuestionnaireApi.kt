@@ -4,6 +4,7 @@ import com.conceptic.andcourse.data.api.questionnaire.model.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface QuestionnaireApi {
@@ -15,4 +16,7 @@ interface QuestionnaireApi {
 
     @POST("questionnaire/complete")
     fun completeQuestionnaireAsync(): Deferred<Response<CompleteQuestionnaireResponse>>
+
+    @GET("questionnaire/summary")
+    fun summaryAsync(): Deferred<Response<SummaryResponse>>
 }

@@ -23,7 +23,7 @@ object UseCaseModule {
 
         factory { CompleteQuestionnaireCase(get(), get()) }
 
-        factory { SummaryCase(get()) }
+        factory { SummaryCase(get(), get()) }
 
         factory { StatisticsCase(get()) }
     }

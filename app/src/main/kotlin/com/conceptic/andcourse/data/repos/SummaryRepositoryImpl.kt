@@ -5,15 +5,15 @@ import com.conceptic.andcourse.data.database.mapping.FeatureMapper
 import com.conceptic.andcourse.data.model.Feature
 import kotlinx.coroutines.coroutineScope
 
-interface FeatureRepository {
+interface SummaryRepository {
     suspend fun drop()
     suspend fun store(features: List<Feature>)
     suspend fun features(): List<Feature>
 }
 
-class FeatureRepositoryImpl(
+class SummaryRepositoryImpl(
     private val dao: FeatureDao
-) : FeatureRepository {
+) : SummaryRepository {
     override suspend fun drop() = coroutineScope {
         dao.drop()
     }

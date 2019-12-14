@@ -2,10 +2,10 @@ package com.conceptic.andcourse.di
 
 import androidx.room.Room
 import com.conceptic.andcourse.data.database.Database
-import com.conceptic.andcourse.data.repos.FeatureRepository
-import com.conceptic.andcourse.data.repos.FeatureRepositoryImpl
 import com.conceptic.andcourse.data.repos.QuestionRepository
 import com.conceptic.andcourse.data.repos.QuestionRepositoryImpl
+import com.conceptic.andcourse.data.repos.SummaryRepository
+import com.conceptic.andcourse.data.repos.SummaryRepositoryImpl
 import org.koin.dsl.module
 
 object DatabaseModule {
@@ -30,6 +30,6 @@ object DatabaseModule {
          */
         factory<QuestionRepository> { QuestionRepositoryImpl(get()) }
 
-        factory<FeatureRepository> { FeatureRepositoryImpl(get()) }
+        factory<SummaryRepository> { SummaryRepositoryImpl(get()) }
     }
 }

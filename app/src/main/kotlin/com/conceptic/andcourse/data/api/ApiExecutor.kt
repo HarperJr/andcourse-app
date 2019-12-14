@@ -1,5 +1,6 @@
 package com.conceptic.andcourse.data.api
 
+import android.content.Context
 import com.conceptic.andcourse.data.api.support.ErrorMessage
 import com.google.gson.Gson
 import kotlinx.coroutines.Deferred
@@ -10,7 +11,7 @@ import retrofit2.Response
 /**
  * Base class for all ApiExecutors
  */
-open class ApiExecutor<T>(private val api: T) : KoinComponent {
+open class ApiExecutor<T>(private val context: Context, private val api: T) : KoinComponent {
     private val gson by inject<Gson>()
 
     /**
@@ -20,7 +21,9 @@ open class ApiExecutor<T>(private val api: T) : KoinComponent {
      * @exception ApiException if response code is 4xx, 5xx
      */
     protected suspend fun <E> executeService(serviceInvocation: T.() -> Deferred<Response<E>>): E {
-        val response = serviceInvocation.invoke(api).await()
+        val response = runCatching {
+            serviceInvocation.invoke(api).await()
+        }.getOrNull() ?: throw ApiException(500, CONNECTION_ERROR)
         return if (response.isSuccessful) {
             response.body() ?: throw ApiException(response.code(), "Response is null")
         } else {
@@ -29,5 +32,9 @@ open class ApiExecutor<T>(private val api: T) : KoinComponent {
                 throw ApiException(response.code(), body.message)
             } ?: throw ApiException(response.code(), response.message())
         }
+    }
+
+    companion object {
+        private const val CONNECTION_ERROR = "Unable to connect to the server, please retry"
     }
 }

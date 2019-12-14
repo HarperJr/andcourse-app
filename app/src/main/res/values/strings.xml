@@ -8,6 +8,7 @@
     <string name="signin_with_google">Sign in with google</string>
     <string name="signin_text">SignIn</string>
     <string name="signin_goto_signup">Don\'t have an account yet? SignUp</string>
+    <string name="signin_btn_skip">Or skip</string>
 
     <!--IntroFragment-->
     <string name="intro_pass_btn_text">Pass</string>
@@ -29,7 +30,11 @@
     <!-- QuestionsAdapter-->
     <string name="item_question_no_btn">No</string>
     <string name="item_question_yes_btn">Yes</string>
-    <string name="dialog_progress_loading">Loading</string>
+    <string name="dialog_progress_loading">Please stand by...</string>
 
     <string name="questionnaire_back_pressed_message">Press once again to leave questionnaire</string>
+
+    <string name="no_summary_description">Here you will see your summary.\nPlease press the button below to pass the questionnaire</string>
+    <string name="summary_pass_questionnaire_btn">Pass questionnaire</string>
+    <string name="summary">Summary</string>
 </resources>

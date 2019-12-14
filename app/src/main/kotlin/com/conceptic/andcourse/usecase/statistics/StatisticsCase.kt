@@ -1,12 +1,14 @@
 package com.conceptic.andcourse.usecase.statistics
 
-import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutor
+import com.conceptic.andcourse.data.api.ApiExecutorFactory
 import com.conceptic.andcourse.data.model.Statistics
 import com.conceptic.andcourse.usecase.UseCase
 
 class StatisticsCase(
-    private val statisticsApiExector: StatisticsApiExecutor
+    apiExecutorFactory: ApiExecutorFactory
 ) : UseCase<StatisticsParam, Statistics> {
+    private val statisticsApiExector = apiExecutorFactory.statisticsExecutor()
+
     override suspend fun execute(param: StatisticsParam): Statistics {
         //TODO implement this
         return Statistics()

@@ -1,18 +1,22 @@
 package com.conceptic.andcourse.presentation.auth.signin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
+import com.conceptic.andcourse.presentation.auth.signin.support.GoogleAuthHandler
+import com.conceptic.andcourse.presentation.auth.signin.support.GoogleAuthResultCallback
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.ext.validate
 import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.fragment_signin.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     override val viewModel: SignInViewModel by currentScope.viewModel(this)
+    private val googleAuthHandler: GoogleAuthHandler by currentScope.inject()
 
     private val email
         get() = signin_input_email validate {
@@ -27,10 +31,14 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.signInSuccessLiveData.observe({ lifecycle }) {
-            findNavController().navigate(R.id.action_signInFragment_to_introFragment)
-        }
+        viewModel.signInSuccessLiveData.observe({ lifecycle }) { navController.navigate(R.id.action_signInFragment_to_introFragment) }
         viewModel.loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
+
+        googleAuthHandler.googleAuthResultCallback = googleAuthResultCallback
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        googleAuthHandler.onActivityResult(requestCode, requestCode, data)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,11 +47,20 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
                 viewModel.onSignInBtnClicked(email.value, password.value)
             }
         }
-
-        signin_btn_goto_signup.setOnClickListener {
-            findNavController().navigate(R.id.action_signinFragment_to_signUpFragment)
-        }
+        signin_btn_goto_signup.setOnClickListener { navController.navigate(R.id.action_signinFragment_to_signUpFragment) }
+        signin_btn_skip.setOnClickListener { navController.navigate(R.id.action_signInFragment_to_summaryFragment) }
+        signin_btn_with_google.setOnClickListener { googleAuthHandler.startSignInActivity(this) }
     }
 
     private fun setProgressVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)
+
+    private val googleAuthResultCallback = object : GoogleAuthResultCallback {
+        override fun onSuccess(googleAccount: GoogleSignInAccount) {
+            viewModel.onSignedInWithGoogle(googleAccount)
+        }
+
+        override fun onFailure(throwable: Throwable) {
+
+        }
+    }
 }

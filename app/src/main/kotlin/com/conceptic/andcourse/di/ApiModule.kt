@@ -2,17 +2,13 @@ package com.conceptic.andcourse.di
 
 import android.content.Context
 import com.conceptic.andcourse.BuildConfig
+import com.conceptic.andcourse.data.api.ApiExecutorFactory
 import com.conceptic.andcourse.data.api.auth.AuthApi
-import com.conceptic.andcourse.data.api.auth.AuthApiExecutor
-import com.conceptic.andcourse.data.api.auth.AuthApiExecutorImpl
 import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
-import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutor
-import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApiExecutorImpl
 import com.conceptic.andcourse.data.api.statistics.StatisticsApi
-import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutor
-import com.conceptic.andcourse.data.api.statistics.StatisticsApiExecutorImpl
 import com.conceptic.andcourse.data.api.support.Interceptors
+import com.conceptic.andcourse.data.api.support.JwtPayloadProvider
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
@@ -60,6 +56,8 @@ object ApiModule {
                 .build()
         }
 
+        single { JwtPayloadProvider(get()) }
+
         /**
          * Api instances are declared here
          */
@@ -72,11 +70,7 @@ object ApiModule {
         /**
          * ApiExecutors instances are declared here
          */
-        single<AuthApiExecutor> { AuthApiExecutorImpl(get()) }
-
-        single<QuestionnaireApiExecutor> { QuestionnaireApiExecutorImpl(get()) }
-
-        single<StatisticsApiExecutor> { StatisticsApiExecutorImpl(get()) }
+        single { ApiExecutorFactory(get()) }
     }
 
     private const val CALL_TIMEOUT = 10000L
