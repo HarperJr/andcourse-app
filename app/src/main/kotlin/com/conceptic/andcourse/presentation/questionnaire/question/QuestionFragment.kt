@@ -48,11 +48,12 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
 
     override fun onBackPressed(): Boolean {
         if (!backPressed) {
+            backPressed = true
             showSnack(R.string.questionnaire_back_pressed_message, Snackbar.LENGTH_SHORT)
             handler.postDelayed({ backPressed = false }, BACK_PRESSED_DELAY_MILLIS)
-            backPressed = true
+            return false
         }
-        return backPressed
+        return super.onBackPressed()
     }
 
     companion object {

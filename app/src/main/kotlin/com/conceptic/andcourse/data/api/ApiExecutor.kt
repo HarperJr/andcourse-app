@@ -28,13 +28,14 @@ open class ApiExecutor<T>(private val context: Context, private val api: T) : Ko
             response.body() ?: throw ApiException(response.code(), "Response is null")
         } else {
             response.errorBody()?.let { errorBody ->
-                val body = gson.fromJson(errorBody.string(), ErrorMessage::class.java)
-                throw ApiException(response.code(), body.message)
+                val body: ErrorMessage? = gson.fromJson(errorBody.string(), ErrorMessage::class.java)
+                throw ApiException(response.code(), body?.message ?: UNDEFINED_ERROR)
             } ?: throw ApiException(response.code(), response.message())
         }
     }
 
     companion object {
         private const val CONNECTION_ERROR = "Unable to connect to the server, please retry"
+        private const val UNDEFINED_ERROR = "Something is gone wrong, please retry"
     }
 }

@@ -8,13 +8,12 @@ import timber.log.Timber
 
 object Interceptors {
     fun jwtTokenInterceptor(jwtTokenProvider: JwtTokenProvider): Interceptor = object : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            return with(chain) {
-                val request = request().newBuilder()
-                    .addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(jwtTokenProvider.get()))
-                    .build()
-                proceed(request)
+        override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
+            val requestBuilder = request().newBuilder()
+            jwtTokenProvider.get()?.also {
+                requestBuilder.addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(it))
             }
+            proceed(requestBuilder.build())
         }
     }
 

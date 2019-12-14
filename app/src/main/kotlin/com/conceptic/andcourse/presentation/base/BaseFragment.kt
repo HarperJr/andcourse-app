@@ -17,12 +17,12 @@ abstract class BaseFragment<VM : BaseViewModel>(@LayoutRes layout: Int) : Fragme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.errorMessageLiveData.observe({ lifecycle }) { message ->
-            showSnack(message, Snackbar.LENGTH_SHORT)
-        }
+        viewModel.errorMessageLiveData.observe({ lifecycle }) { message -> handleError(message) }
     }
 
     open fun onBackPressed(): Boolean = true
+
+    protected open fun handleError(message: String) = showSnack(message, Snackbar.LENGTH_SHORT)
 
     protected fun showSnack(
         @StringRes messageRes: Int, type: Int,

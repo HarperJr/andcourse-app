@@ -13,13 +13,16 @@ class CompleteQuestionnaireCase(
 ) : UseCase<Unit, Unit> {
     private val questionnaireApiExecutor = executorFactory.questionnaireExecutor()
 
-    override suspend fun execute(param: Unit) = coroutineScope {
-        val features = questionnaireApiExecutor.completeQuestionnaire().results.map { result ->
-            Feature(FeatureType.of(result.featureType), result.featureDescription, result.points)
-        }
-        featuresRepository.run {
-            drop()
-            store(features)
+    override suspend fun execute(param: Unit) {
+        coroutineScope {
+            questionnaireApiExecutor.completeQuestionnaire().results.map { result ->
+                Feature(FeatureType.of(result.featureType), result.featureDescription, result.points)
+            }.also {
+                featuresRepository.run {
+                    drop()
+                    store(it)
+                }
+            }
         }
     }
 }

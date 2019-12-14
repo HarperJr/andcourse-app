@@ -1,7 +1,6 @@
 package com.conceptic.andcourse.usecase.questionnaire.summary
 
 import com.conceptic.andcourse.data.api.ApiExecutorFactory
-import com.conceptic.andcourse.data.database.mapping.FeatureMapper
 import com.conceptic.andcourse.data.model.Feature
 import com.conceptic.andcourse.data.model.FeatureType
 import com.conceptic.andcourse.data.repos.SummaryRepository
@@ -15,9 +14,14 @@ class SummaryCase(
     private val questionnaireApiExecutor = apiExecutorFactory.questionnaireExecutor()
 
     override suspend fun execute(param: Unit): List<Feature> = coroutineScope {
-        val response = runCatching { questionnaireApiExecutor.summary() }.getOrNull()
-        response?.let { summary ->
-            summary.features.map { Feature(FeatureType.of(it.featureType), it.featureDescription, it.points) }
-        } ?: summaryRepository.features()
+        val summary = summaryRepository.features()
+        if (summary.isEmpty()) {
+            val response = questionnaireApiExecutor.summary()
+            response.let {
+                it.features.map { feat ->
+                    Feature(FeatureType.of(feat.featureType), feat.featureDescription, feat.points)
+                }
+            }
+        } else emptyList()
     }
 }
