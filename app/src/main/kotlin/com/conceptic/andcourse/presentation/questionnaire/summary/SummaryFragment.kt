@@ -7,6 +7,7 @@ import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.MainViewModel
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.questionnaire.summary.adapter.SummaryAdapter
+import com.conceptic.andcourse.presentation.questionnaire.summary.view.OffsetDecoration
 import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
 import kotlinx.android.synthetic.main.fragment_summary.*
 import kotlinx.android.synthetic.main.summary_placeholder.*
@@ -14,7 +15,9 @@ import org.koin.androidx.scope.currentScope
 
 class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary) {
     override val viewModel: SummaryViewModel by currentScope.inject()
-    private val summaryAdapter = SummaryAdapter()
+    private val summaryAdapter = SummaryAdapter {
+        navController.navigate(R.id.action_summaryFragment_to_introFragment)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +25,9 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
         val sharedViewModel = requireActivity().currentScope.get<MainViewModel>()
         sharedViewModel.credentialsLiveData.observe({ lifecycle }) { credentials ->
             if (credentials == null) {
-                navController.navigate(R.id.action_summaryFragment_to_auth_navigation)
+                summaryAdapter.showAuthProposal {
+                    navController.navigate(R.id.action_summaryFragment_to_auth_navigation)
+                }
             } else viewModel.onCredentialsReceived(credentials)
         }
         with(viewModel) {
@@ -44,7 +49,14 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
     private fun setLoadingVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        summary_recycler.adapter = summaryAdapter
+        summary_recycler.apply {
+            addItemDecoration(OffsetDecoration(ITEMS_OFFSET, ITEMS_OFFSET))
+            adapter = summaryAdapter
+        }
         summary_pass_questionnaire_btn.setOnClickListener { navController.navigate(R.id.action_summaryFragment_to_introFragment) }
+    }
+
+    companion object {
+        private const val ITEMS_OFFSET = 10
     }
 }

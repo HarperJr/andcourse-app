@@ -45,4 +45,6 @@
     <string name="reaction_tempo">Reaction/Tempo</string>
     <string name="activity_passivity">Activity/Passivity</string>
     <string name="honesty_privacy">Honesty/Privacy</string>
+    <string name="auth_proposal_title">Don\'t have an account yet?\nSign up to join our statistics labs</string>
+    <string name="auth_proposal_btn">SignUp to Join</string>
 </resources>
