@@ -2,37 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/signInFragment">
-
-    <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.conceptic.andcourse.presentation.auth.signin.SignInFragment"
-        android:label="SignInFragment">
-
-        <action
-            android:id="@+id/action_signinFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-
-        <action
-            android:id="@+id/action_signInFragment_to_introFragment"
-            app:destination="@id/introFragment" />
-
-        <action
-            android:id="@+id/action_signInFragment_to_summaryFragment"
-            app:destination="@id/summaryFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.conceptic.andcourse.presentation.auth.signup.SignUpFragment"
-        android:label="SignUpFragment">
-
-        <action
-            android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-
-    </fragment>
+    app:startDestination="@id/summaryFragment">
 
     <fragment
         android:id="@+id/questionFragment"
@@ -62,6 +32,35 @@
         <action
             android:id="@+id/action_summaryFragment_to_introFragment"
             app:destination="@id/introFragment" />
+        <action
+            android:id="@+id/action_summaryFragment_to_auth_navigation"
+            app:destination="@id/auth_navigation" />
+        <action
+            android:id="@+id/action_summaryFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
     </fragment>
+
+    <navigation
+        android:id="@+id/auth_navigation"
+        app:startDestination="@id/signInFragment">
+        <fragment
+            android:id="@+id/signInFragment"
+            android:name="com.conceptic.andcourse.presentation.auth.signin.SignInFragment"
+            android:label="SignInFragment">
+
+            <action
+                android:id="@+id/action_signinFragment_to_signUpFragment"
+                app:destination="@id/signUpFragment" />
+
+        </fragment>
+        <fragment
+            android:id="@+id/signUpFragment"
+            android:name="com.conceptic.andcourse.presentation.auth.signup.SignUpFragment"
+            android:label="SignUpFragment" />
+    </navigation>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.conceptic.andcourse.presentation.statistics.StatisticsFragment"
+        android:label="StatisticsFragment" />
 
 </navigation>

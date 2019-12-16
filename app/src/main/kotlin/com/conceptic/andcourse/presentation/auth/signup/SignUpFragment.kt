@@ -3,7 +3,6 @@ package com.conceptic.andcourse.presentation.auth.signup
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Gender
 import com.conceptic.andcourse.presentation.base.BaseFragment
@@ -53,7 +52,10 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
         super.onCreate(savedInstanceState)
 
         viewModel.signUpSuccessLiveData.observe({ lifecycle }) {
-            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+            navController.popBackStack(
+                R.id.signInFragment,
+                false
+            )
         }
         viewModel.loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
     }

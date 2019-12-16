@@ -1,6 +1,8 @@
 package com.conceptic.andcourse.di
 
 import com.conceptic.andcourse.SharedPreferencesProvider
+import com.conceptic.andcourse.presentation.MainActivity
+import com.conceptic.andcourse.presentation.MainViewModel
 import com.conceptic.andcourse.presentation.auth.signin.SignInFragment
 import com.conceptic.andcourse.presentation.auth.signin.SignInViewModel
 import com.conceptic.andcourse.presentation.auth.signin.support.GoogleAuthHandler
@@ -19,6 +21,12 @@ import org.koin.dsl.module
 object AppModule {
     operator fun invoke() = module {
         single { SharedPreferencesProvider(get()) }
+
+        scope(named<MainActivity>()) {
+            viewModel {
+                MainViewModel(get())
+            }
+        }
 
         scope(named<SignInFragment>()) {
             factory { GoogleAuthHandler(get()) }

@@ -1,10 +1,12 @@
 package com.conceptic.andcourse.presentation.questionnaire.question
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.conceptic.andcourse.R
+import com.conceptic.andcourse.data.model.Question
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.questionnaire.question.adapter.QuestionsAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -28,13 +30,16 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
         super.onCreate(savedInstanceState)
 
         viewModel.apply {
-            questionsLiveData.observe({ lifecycle }) { questions -> adapter.items = questions }
+            questionsLiveData.observe({ lifecycle }) { questions ->
+                adapter.items = questions
+                onQuestionsDefined(questions)
+            }
             questionnaireCompleteLiveData.observe({ lifecycle }) {
                 findNavController().navigate(R.id.action_questionFragment_to_summaryFragment)
             }
-
             currentQuestionLiveData.observe({ lifecycle }) { currentQuestion ->
                 question_view_pager.setCurrentItem(currentQuestion.order, true)
+                onCurrentQuestionChanged(currentQuestion)
             }
         }
     }
@@ -54,6 +59,17 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
             return false
         }
         return super.onBackPressed()
+    }
+
+    private fun onCurrentQuestionChanged(question: Question) {
+        val newProgress = question.order
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            passing_progress.setProgress(newProgress, true)
+        } else passing_progress.progress = newProgress
+    }
+
+    private fun onQuestionsDefined(questions: List<Question>) {
+        passing_progress.max = questions.size
     }
 
     companion object {

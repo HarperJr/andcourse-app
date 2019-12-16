@@ -2,6 +2,7 @@ package com.conceptic.andcourse.usecase.statistics
 
 import com.conceptic.andcourse.data.api.ApiExecutorFactory
 import com.conceptic.andcourse.data.model.Statistics
+import com.conceptic.andcourse.data.model.StatisticsViewType
 import com.conceptic.andcourse.usecase.UseCase
 
 class StatisticsCase(
@@ -11,6 +12,6 @@ class StatisticsCase(
 
     override suspend fun execute(param: StatisticsParam): Statistics {
         //TODO implement this
-        return Statistics()
+        return Statistics(StatisticsViewType.CHART_COLUMNS, "", emptyList())
     }
 }

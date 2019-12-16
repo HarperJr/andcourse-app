@@ -1,5 +1,6 @@
 package com.conceptic.andcourse.di
 
+import com.conceptic.andcourse.usecase.auth.credentials.CredentialsCase
 import com.conceptic.andcourse.usecase.auth.signin.SignInCase
 import com.conceptic.andcourse.usecase.auth.signup.SignUpCase
 import com.conceptic.andcourse.usecase.questionnaire.intro.BeginQuestionnaireCase
@@ -16,6 +17,8 @@ object UseCaseModule {
 
         factory { SignUpCase(get()) }
 
+        factory { CredentialsCase(get()) }
+
         //Questionnaire
         factory { BeginQuestionnaireCase(get(), get()) }
 
@@ -26,5 +29,6 @@ object UseCaseModule {
         factory { SummaryCase(get(), get()) }
 
         factory { StatisticsCase(get()) }
+
     }
 }

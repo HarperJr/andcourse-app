@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.conceptic.andcourse.data.api.ApiException
+import com.conceptic.andcourse.data.model.Credentials
+import com.conceptic.andcourse.data.model.Role
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.questionnaire.summary.SummaryCase
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +16,7 @@ class SummaryViewModel(
     private val summaryCase: SummaryCase
 ) : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
+    val statisticsRoutingLiveData = MutableLiveData<Unit>()
     val summaryLiveData = liveData(viewModelScope.coroutineContext) {
         coroutineScope {
             runCatching {
@@ -30,6 +33,12 @@ class SummaryViewModel(
                     errorMessages.postValue(it)
                 }
             }
+        }
+    }
+
+    fun onCredentialsReceived(credentials: Credentials) {
+        if (credentials.role == Role.OBSERVER) {
+            statisticsRoutingLiveData.value = Unit
         }
     }
 }
