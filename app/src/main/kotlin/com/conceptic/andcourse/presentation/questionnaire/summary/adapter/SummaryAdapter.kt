@@ -8,14 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Feature
-import kotlinx.android.synthetic.main.item_summary_auth_proposal.view.*
+import kotlinx.android.synthetic.main.item_summary_retry_proposal.view.*
 import kotlinx.android.synthetic.main.item_summary_feature_widget.view.*
 
 /**
  * Additional item's types
  */
-object AuthProposal
-
 object RetryProposal
 
 private val diffUtilsCallback = object : DiffUtil.ItemCallback<Any>() {
@@ -33,18 +31,9 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
             field = listOf(*value.toTypedArray(), RetryProposal)
             notifyDataSetChanged()
         }
-    private var onSignUpBtnClickListener: (() -> Unit)? = null
-
-    fun showAuthProposal(onSignUpBtnClickListener: () -> Unit) {
-        if (items.last() !is AuthProposal) {
-            this.onSignUpBtnClickListener = onSignUpBtnClickListener
-            items = listOf(*items.toTypedArray(), AuthProposal)
-        }
-    }
 
     override fun getItemViewType(position: Int): Int = when (items[position]) {
         is Feature -> FEATURE_VIEW
-        is AuthProposal -> AUTH_PROPOSAL_VIEW
         is RetryProposal -> RETRY_PROPOSAL_VIEW
         else -> throw IllegalStateException("Unable to resolve viewType of item at position=$position")
     }
@@ -53,7 +42,6 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
         with(LayoutInflater.from(parent.context)) {
             when (viewType) {
                 FEATURE_VIEW -> FeatureViewHolder(inflate(R.layout.item_summary_feature_widget, parent, false))
-                AUTH_PROPOSAL_VIEW -> AuthProposalViewHolder(inflate(R.layout.item_summary_auth_proposal, parent, false))
                 RETRY_PROPOSAL_VIEW -> RetryProposalViewHolder(inflate(R.layout.item_summary_retry_proposal, parent, false))
                 else -> throw IllegalStateException("Unable to resolve view holder of item by view type=$viewType")
             }
@@ -72,27 +60,18 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
         }
     }
 
-    inner class AuthProposalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            with(itemView) {
-                item_summary_proposal_btn.setOnClickListener {
-                    onSignUpBtnClickListener?.invoke()
-                }
-            }
-        }
-    }
-    
     inner class RetryProposalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             with(itemView) {
-                
+                item_summary_proposal_btn.setOnClickListener {
+                    this@SummaryAdapter.onRetryBtnClickListener.invoke()
+                }
             }
         }
     }
 
     companion object {
         private const val FEATURE_VIEW = 0
-        private const val AUTH_PROPOSAL_VIEW = 1
-        private const val RETRY_PROPOSAL_VIEW = 2
+        private const val RETRY_PROPOSAL_VIEW = 1
     }
 }
