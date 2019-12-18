@@ -57,6 +57,7 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
     inner class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Feature) = with(itemView) {
             item_summary_title.text = context.getString(item.type.description)
+            item_summary_points.text = context.getString(R.string.summary_points, item.points)
         }
     }
 

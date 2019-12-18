@@ -78,6 +78,9 @@ dependencies {
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    //MPChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     //Koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
@@ -90,7 +93,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //Auth0 Jwt
-    implementation 'com.auth0:java-jwt:3.8.3'
+    implementation 'com.auth0.android:jwtdecode:1.4.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

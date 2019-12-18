@@ -34,9 +34,11 @@
 
     <string name="questionnaire_back_pressed_message">Press once again to leave questionnaire</string>
 
+    <!--Summary-->
     <string name="no_summary_description">Here you will see your summary.\nPlease press the button below to pass the questionnaire</string>
     <string name="summary_pass_questionnaire_btn">Pass questionnaire</string>
     <string name="summary">Summary</string>
+    <string name="summary_points">Points: %d/25</string>
 
     <!--FeatureType-->
     <string name="extraversion_introversion">Extraversion/Introversion</string>

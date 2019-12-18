@@ -69,11 +69,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val onDestinationChangeListener =
         NavController.OnDestinationChangedListener { _, destination, _ ->
             val isToolbarVisible = when (destination.id) {
-                R.id.signInFragment,
-                R.id.signUpFragment,
-                R.id.introFragment,
-                R.id.questionFragment -> false
-                else -> true
+                R.id.summaryFragment -> true
+                else -> false
             }
             toolbar.isVisible = isToolbarVisible
         }

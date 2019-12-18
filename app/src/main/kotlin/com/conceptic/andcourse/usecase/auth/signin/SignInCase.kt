@@ -3,6 +3,7 @@ package com.conceptic.andcourse.usecase.auth.signin
 import com.conceptic.andcourse.data.api.ApiExecutorFactory
 import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.auth.model.SignInRequest
+import com.conceptic.andcourse.data.api.support.JwtTokenWrapper
 import com.conceptic.andcourse.usecase.UseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -18,7 +19,10 @@ class SignInCase(
         val response = authApiExecutor
             .signIn(SignInRequest(email = param.email, password = param.password))
         withContext(Dispatchers.Main) {
-            jwtTokenProvider.put(jwt = response.jwt)
+            val jwt = JwtTokenWrapper(response.jwt)
+            if (JwtTokenValidator.valid(jwt)) {
+                jwtTokenProvider.put(jwt = jwt)
+            }
         }
     }
 }

@@ -8,7 +8,6 @@ import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.api.questionnaire.QuestionnaireApi
 import com.conceptic.andcourse.data.api.statistics.StatisticsApi
 import com.conceptic.andcourse.data.api.support.Interceptors
-import com.conceptic.andcourse.data.api.support.JwtPayloadProvider
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
@@ -55,8 +54,6 @@ object ApiModule {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
                 .build()
         }
-
-        single { JwtPayloadProvider(get()) }
 
         /**
          * Api instances are declared here
