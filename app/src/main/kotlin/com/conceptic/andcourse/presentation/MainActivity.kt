@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Role
 import com.conceptic.andcourse.presentation.base.BaseFragment
@@ -20,8 +19,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        toolbar.setupWithNavController(navController)
-
         setSupportActionBar(toolbar)
 
         viewModel.roleLiveData.observe({ lifecycle }) { role ->
@@ -60,5 +57,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 else -> false
             }
             toolbar.isVisible = isToolbarVisible
+            toolbar.title = destination.label
         }
 }

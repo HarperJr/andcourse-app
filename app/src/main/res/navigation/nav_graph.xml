@@ -72,8 +72,8 @@
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.conceptic.andcourse.presentation.statistics.StatisticsFragment"
-        android:label="StatisticsFragment"
-        tools:layout="@layout/fragment_statistics" >
+        android:label="Statistics"
+        tools:layout="@layout/fragment_statistics">
         <action
             android:id="@+id/action_statisticsFragment_to_personalPageFragment"
             app:destination="@id/personalPageFragment" />

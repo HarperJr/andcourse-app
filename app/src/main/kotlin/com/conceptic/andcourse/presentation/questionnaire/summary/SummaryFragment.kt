@@ -13,7 +13,6 @@ import com.conceptic.andcourse.presentation.questionnaire.summary.adapter.Summar
 import com.conceptic.andcourse.presentation.questionnaire.summary.view.OffsetDecoration
 import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
 import kotlinx.android.synthetic.main.fragment_summary.*
-import kotlinx.android.synthetic.main.personal_placeholder.*
 import kotlinx.android.synthetic.main.summary_placeholder.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -59,11 +58,12 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
         else -> false
     }
 
-    private fun onAccountItemClicked() {
-        val userRole = mainViewModel.roleLiveData.value
-        userRole?.let {
-            navController.navigate(R.id.action_summaryFragment_to_personalPageFragment)
-        } ?: navController.navigate(R.id.auth_navigation)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        summary_recycler.apply {
+            addItemDecoration(OffsetDecoration(ITEMS_OFFSET, ITEMS_OFFSET))
+            adapter = summaryAdapter
+        }
+        summary_pass_questionnaire_btn.setOnClickListener { navController.navigate(R.id.action_summaryFragment_to_introFragment) }
     }
 
     override fun handleError(message: String) {
@@ -72,12 +72,11 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
 
     private fun setLoadingVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        summary_recycler.apply {
-            addItemDecoration(OffsetDecoration(ITEMS_OFFSET, ITEMS_OFFSET))
-            adapter = summaryAdapter
-        }
-        summary_pass_questionnaire_btn.setOnClickListener { navController.navigate(R.id.action_summaryFragment_to_introFragment) }
+    private fun onAccountItemClicked() {
+        val userRole = mainViewModel.roleLiveData.value
+        userRole?.let {
+            navController.navigate(R.id.action_summaryFragment_to_personalPageFragment)
+        } ?: navController.navigate(R.id.auth_navigation)
     }
 
     companion object {
