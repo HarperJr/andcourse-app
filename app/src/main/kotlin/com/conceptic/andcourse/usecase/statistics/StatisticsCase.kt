@@ -12,6 +12,6 @@ class StatisticsCase(
 
     override suspend fun execute(param: StatisticsParam): Statistics {
         //TODO implement this
-        return Statistics(StatisticsViewType.CHART_COLUMNS, "", emptyList())
+        return Statistics(StatisticsViewType.CHART_BAR, "", emptyList())
     }
 }

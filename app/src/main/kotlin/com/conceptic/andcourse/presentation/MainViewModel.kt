@@ -1,22 +1,28 @@
 package com.conceptic.andcourse.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import com.conceptic.andcourse.data.model.Credentials
-import com.conceptic.andcourse.usecase.auth.credentials.CredentialsCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.LiveData
+import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
+import com.conceptic.andcourse.data.model.Role
+import com.conceptic.andcourse.presentation.base.BaseViewModel
 
 class MainViewModel(
-    private val credentialsCase: CredentialsCase
-) : ViewModel() {
-    val credentialsLiveData = liveData<Credentials?>(viewModelScope.coroutineContext) {
-        runCatching {
-            withContext(Dispatchers.IO) {
-                credentialsCase.execute(Unit)
+    private val jwtTokenProvider: JwtTokenProvider
+) : BaseViewModel() {
+    val roleLiveData = object : LiveData<Role>() {
+        private var role: Role? = null
+
+        override fun onActive() {
+            val jwtToken = jwtTokenProvider.get()
+            role = jwtToken?.let { jwt ->
+                if (!jwt.expired()) {
+                    jwt.getClaim(ROLE_CLAIM)?.let { Role.of(it.asInt()!!) }
+                } else null
             }
-        }.onSuccess { credentials -> emit(credentials) }
-            .onFailure { emit(null) }
+            value = role
+        }
+    }
+
+    companion object {
+        private const val ROLE_CLAIM = "role"
     }
 }

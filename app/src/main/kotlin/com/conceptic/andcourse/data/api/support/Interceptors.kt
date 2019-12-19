@@ -5,14 +5,13 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
-import java.util.*
 
 object Interceptors {
     fun jwtTokenInterceptor(jwtTokenProvider: JwtTokenProvider): Interceptor = object : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
             val requestBuilder = request().newBuilder()
             jwtTokenProvider.get()?.also { jwt ->
-                if (jwt.expiresAt > Date()) {
+                if (!jwt.expired()) {
                     requestBuilder.addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(jwt.token))
                 }
             }

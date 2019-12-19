@@ -7,7 +7,9 @@ class JwtTokenProvider(private val sharedPreferencesProvider: SharedPreferencesP
     fun get(): JwtTokenWrapper? = sharedPreferencesProvider.get<String>(JWT_TOKEN)
         ?.let { JwtTokenWrapper(it) }
 
-    fun put(jwt: JwtTokenWrapper) = sharedPreferencesProvider.put(JWT_TOKEN, jwt.token)
+    fun put(jwt: JwtTokenWrapper?) = jwt?.let {
+        sharedPreferencesProvider.put(JWT_TOKEN, it.token)
+    } ?: sharedPreferencesProvider.remove(JWT_TOKEN)
 
     companion object {
         private const val JWT_TOKEN = "jwt_token"

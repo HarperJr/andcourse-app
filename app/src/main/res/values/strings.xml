@@ -50,4 +50,19 @@
     <string name="auth_proposal_title">Want to retry to pass the questionnaire?</string>
     <string name="auth_proposal_btn">Retry to pass</string>
     <string name="menu_account">Account</string>
+
+    <!--IntroFragment-->
+    <string name="intro_page_1">Welcome! This questionnaire is supposed to associate your temperaments features to range from 0 to 25 points</string>
+    <string name="intro_page_2">That means that any of your answer could</string>
+    <string name="intro_page_3">No text for a while</string>
+    <string name="intro_page_4">No text for a while</string>
+
+    <!--PersonalPageFragment-->
+    <string name="personal_logout">Logout</string>
+    <string name="receive_personal_error">Oops… Sorry but it seems you are requesting not existed page, plaese retry</string>
+    <string name="personal_mail">Mail: %s</string>
+    <string name="personal_gender">Gender: %s</string>
+    <string name="personal_date_birth">Date birth: %s</string>
+    <string name="personal_date_registered">Date registered: %s</string>
+    <string name="personal_retry_btn">Retry</string>
 </resources>

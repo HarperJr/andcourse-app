@@ -3,7 +3,7 @@ package com.conceptic.andcourse.data.model
 enum class StatisticsViewType {
     CHART_LINE,
     CHART_PIE,
-    CHART_COLUMNS;
+    CHART_BAR;
 
     companion object {
         fun of(value: Int) = values().find { it.ordinal == value }

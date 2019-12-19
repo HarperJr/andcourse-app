@@ -13,4 +13,6 @@ class JwtTokenWrapper(val token: String) {
 
     @Throws(IllegalStateException::class, IllegalArgumentException::class)
     fun getClaim(claim: String): Claim? = decodedJwt.claims[claim]
+
+    fun expired(): Boolean = expiresAt <= Date()
 }
