@@ -12,7 +12,7 @@ object Interceptors {
             val requestBuilder = request().newBuilder()
             jwtTokenProvider.get()?.also { jwt ->
                 if (!jwt.expired()) {
-                    requestBuilder.addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(jwt.token))
+                    requestBuilder.addHeader(HEADER_AUTHORIZATION, JwtTokenProvider.bearerByJwt(jwt.rawJwt))
                 }
             }
             proceed(requestBuilder.build())

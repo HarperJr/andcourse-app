@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.conceptic.andcourse.R
+import com.conceptic.andcourse.data.model.ChartViewType
 import com.conceptic.andcourse.data.model.Statistics
-import com.conceptic.andcourse.data.model.StatisticsViewType
 import kotlinx.android.synthetic.main.item_statistics_page.view.*
 
 class StatisticsAdapter : RecyclerView.Adapter<StatisticsAdapter.ViewHolder>() {
@@ -31,10 +31,10 @@ class StatisticsAdapter : RecyclerView.Adapter<StatisticsAdapter.ViewHolder>() {
 
         fun bind(item: Statistics) {
             with(itemView) {
-                val chartView = when (item.statisticsViewType) {
-                    StatisticsViewType.CHART_BAR -> chartViewFactory.provideBarChart(item)
-                    StatisticsViewType.CHART_LINE -> chartViewFactory.provideLineChart(item)
-                    StatisticsViewType.CHART_PIE -> chartViewFactory.providePieChart(item)
+                val chartView = when (item.chartViewType) {
+                    ChartViewType.CHART_BAR -> chartViewFactory.provideBarChart(item)
+                    ChartViewType.CHART_LINE -> chartViewFactory.provideLineChart(item)
+                    ChartViewType.CHART_PIE -> chartViewFactory.providePieChart(item)
                 }
 
                 chart_container.addView(chartView)

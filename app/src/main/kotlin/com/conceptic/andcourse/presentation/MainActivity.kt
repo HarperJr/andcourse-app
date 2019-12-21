@@ -2,7 +2,6 @@ package com.conceptic.andcourse.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.conceptic.andcourse.R
@@ -24,39 +23,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         viewModel.roleLiveData.observe({ lifecycle }) { role ->
             role?.let {
                 if (role == Role.OBSERVER)
-                    navController.navigate(R.id.statisticsFragment)
+                    navController.navigate(R.id.statisticsFragment, null)
             } ?: navController.navigate(R.id.auth_navigation)
             invalidateOptionsMenu()
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        navController.addOnDestinationChangedListener(onDestinationChangeListener)
-    }
-
-    override fun onStop() {
-        navController.removeOnDestinationChangedListener(onDestinationChangeListener)
-        super.onStop()
-    }
-
     override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-        if (fragment !is BaseFragment<*> || fragment.onBackPressed()) {
+        val currentFragment = nav_host_fragment.childFragmentManager
+            .findFragmentById(R.id.nav_host_fragment)
+        if (currentFragment !is BaseFragment<*> || currentFragment.onBackPressed()) {
             if (!navController.navigateUp()) {
                 super.onBackPressed()
             }
         }
     }
-
-    private val onDestinationChangeListener =
-        NavController.OnDestinationChangedListener { _, destination, _ ->
-            val isToolbarVisible = when (destination.id) {
-                R.id.summaryFragment,
-                R.id.statisticsFragment -> true
-                else -> false
-            }
-            toolbar.isVisible = isToolbarVisible
-            toolbar.title = destination.label
-        }
 }

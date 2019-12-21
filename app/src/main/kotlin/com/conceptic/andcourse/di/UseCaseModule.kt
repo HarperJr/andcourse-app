@@ -28,7 +28,6 @@ object UseCaseModule {
 
         factory { SummaryCase(get(), get()) }
 
-        factory { StatisticsCase(get()) }
-
+        factory { StatisticsCase(get(), get()) }
     }
 }

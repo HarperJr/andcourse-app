@@ -31,14 +31,12 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.signInSuccessLiveData.observe({ lifecycle }) {
-            navController.popBackStack(
-                R.id.summaryFragment,
-                false
-            )
+        with(viewModel) {
+            signInSuccessLiveData.observe({ lifecycle }) {
+                navController.popBackStack(R.id.summaryFragment, false)
+            }
+            loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
         }
-        viewModel.loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
-
         googleAuthHandler.googleAuthResultCallback = googleAuthResultCallback
     }
 

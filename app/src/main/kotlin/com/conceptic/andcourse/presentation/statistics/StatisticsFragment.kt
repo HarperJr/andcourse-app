@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isVisible
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.presentation.MainViewModel
 import com.conceptic.andcourse.presentation.base.BaseFragment
@@ -23,10 +24,16 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
+
+        viewModel.statisticsLiveData.observe({ lifecycle }) { statistics ->
+            statistics_placeholder.isVisible = statistics.isEmpty()
+            statisticsAdapter.items = statistics
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         statistics_view_pager.adapter = statisticsAdapter
+        swipe_refresh.setOnRefreshListener { viewModel.onRefreshed() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -37,6 +44,14 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         userRole?.let {
             accountMenuItem.setIcon(R.drawable.ic_account)
         } ?: accountMenuItem.setIcon(R.drawable.ic_signin)
+    }
+
+    /**
+     * Workaround for leaving the app when you are on this screen
+     */
+    override fun onBackPressed(): Boolean {
+        requireActivity().finish()
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

@@ -2,10 +2,7 @@ package com.conceptic.andcourse.di
 
 import androidx.room.Room
 import com.conceptic.andcourse.data.database.Database
-import com.conceptic.andcourse.data.repos.QuestionRepository
-import com.conceptic.andcourse.data.repos.QuestionRepositoryImpl
-import com.conceptic.andcourse.data.repos.SummaryRepository
-import com.conceptic.andcourse.data.repos.SummaryRepositoryImpl
+import com.conceptic.andcourse.data.repos.*
 import org.koin.dsl.module
 
 object DatabaseModule {
@@ -25,11 +22,15 @@ object DatabaseModule {
 
         factory { get<Database>().featureDao() }
 
+        factory { get<Database>().statisticsDao() }
+
         /**
          * Repositories are declared here
          */
         factory<QuestionRepository> { QuestionRepositoryImpl(get()) }
 
         factory<SummaryRepository> { SummaryRepositoryImpl(get()) }
+
+        factory<StatisticsRepository> { StatisticsRepositoryImpl(get()) }
     }
 }

@@ -6,19 +6,19 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/summary_list_icon"
+        android:id="@+id/statistics_icon"
         android:layout_width="82dp"
         android:layout_height="82dp"
         android:layout_margin="32dp"
         android:contentDescription="@string/summary"
         android:src="@drawable/ic_summary_list"
         android:tint="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@id/no_summary_description"
-        app:layout_constraintEnd_toEndOf="@id/no_summary_description"
-        app:layout_constraintStart_toStartOf="@id/no_summary_description" />
+        app:layout_constraintBottom_toTopOf="@id/no_statistics_description"
+        app:layout_constraintEnd_toEndOf="@id/no_statistics_description"
+        app:layout_constraintStart_toStartOf="@id/no_statistics_description" />
 
     <TextView
-        android:id="@+id/no_summary_description"
+        android:id="@+id/no_statistics_description"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,14 +31,14 @@
         tools:layout_editor_absoluteX="32dp" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/summary_pass_questionnaire_btn"
+        android:id="@+id/no_statistics_refresh_btn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:text="@string/summary_pass_questionnaire_btn"
-        app:layout_constraintEnd_toEndOf="@+id/no_summary_description"
-        app:layout_constraintStart_toStartOf="@+id/no_summary_description"
-        app:layout_constraintTop_toBottomOf="@id/no_summary_description" />
+        app:layout_constraintEnd_toEndOf="@+id/no_statistics_description"
+        app:layout_constraintStart_toStartOf="@+id/no_statistics_description"
+        app:layout_constraintTop_toBottomOf="@id/no_statistics_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

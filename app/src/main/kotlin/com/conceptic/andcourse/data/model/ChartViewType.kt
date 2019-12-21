@@ -1,6 +1,6 @@
 package com.conceptic.andcourse.data.model
 
-enum class StatisticsViewType {
+enum class ChartViewType {
     CHART_LINE,
     CHART_PIE,
     CHART_BAR;

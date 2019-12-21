@@ -1,9 +1,9 @@
 package com.conceptic.andcourse.data.model
 
-typealias Dot = Pair<Int, Int>
-
 data class Statistics(
-    val statisticsViewType: StatisticsViewType,
+    val chartViewType: ChartViewType,
     val name: String,
-    val dots: List<Dot>
-)
+    val data: ChartData
+) {
+    data class ChartData(val points: List<Int>, val values: List<Int>)
+}

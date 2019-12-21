@@ -59,10 +59,14 @@
 
     <!--PersonalPageFragment-->
     <string name="personal_logout">Logout</string>
-    <string name="receive_personal_error">Oops… Sorry but it seems you are requesting not existed page, plaese retry</string>
+    <string name="receive_personal_error">Oops… Sorry but it seems you are requesting not existed page, please retry</string>
     <string name="personal_mail">Mail: %s</string>
     <string name="personal_gender">Gender: %s</string>
     <string name="personal_date_birth">Date birth: %s</string>
     <string name="personal_date_registered">Date registered: %s</string>
     <string name="personal_retry_btn">Retry</string>
+
+    <!--StatisticsFragment-->
+    <string name="no_statistics_description">Oops… It seems we cannot to provide you some statistics yet.\nPlease try later</string>
+    <string name="no_statistics_refresh_btn">Refresh</string>
 </resources>
