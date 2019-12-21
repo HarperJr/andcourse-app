@@ -2,6 +2,7 @@ package com.conceptic.andcourse.presentation.statistics
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.conceptic.andcourse.data.api.ApiException
 import com.conceptic.andcourse.data.model.Statistics
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.statistics.StatisticsCase
@@ -12,8 +13,8 @@ class StatisticsViewModel(
 ) : BaseViewModel() {
     val statisticsLiveData = MutableLiveData<List<Statistics>>()
 
-    private val retryFetchJob = SupervisorJob()
-    private val retryFetchScope = CoroutineScope(viewModelScope.coroutineContext + retryFetchJob)
+    private val refreshFetchJob = SupervisorJob()
+    private val refreshFetchScope = CoroutineScope(viewModelScope.coroutineContext + refreshFetchJob)
 
     init {
         onStarted {
@@ -22,16 +23,16 @@ class StatisticsViewModel(
     }
 
     private suspend fun fetchStatistics() {
-        val statistics = withContext(Dispatchers.IO) {
-            statisticsCase.execute(Unit)
-        }
-        statisticsLiveData.value = statistics
-    }
-
-    fun onRefreshed() {
-        retryFetchJob.cancelChildren()
-        retryFetchScope.launch {
-            fetchStatistics()
+        runCatching {
+            withContext(Dispatchers.IO) {
+                statisticsCase.execute(Unit)
+            }
+        }.onSuccess { statistics ->
+            statisticsLiveData.value = statistics
+        }.onFailure { throwable ->
+            ApiException.letFromThrowable(throwable) {
+                errorMessages.value = it
+            }
         }
     }
 }

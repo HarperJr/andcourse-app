@@ -63,7 +63,7 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
             addItemDecoration(OffsetDecoration(ITEMS_OFFSET, ITEMS_OFFSET))
             adapter = summaryAdapter
         }
-        no_statistics_refresh_btn.setOnClickListener { navController.navigate(R.id.action_summaryFragment_to_introFragment) }
+        no_statistics_refresh_btn.setOnClickListener { navController.navigate(R.id.questionnaire_navigation) }
     }
 
     override fun handleError(message: String) {

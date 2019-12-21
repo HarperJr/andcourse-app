@@ -1,18 +1,37 @@
 package com.conceptic.andcourse.usecase.statistics
 
 import com.conceptic.andcourse.data.api.ApiExecutorFactory
+import com.conceptic.andcourse.data.model.ChartValue
 import com.conceptic.andcourse.data.model.ChartViewType
 import com.conceptic.andcourse.data.model.Statistics
 import com.conceptic.andcourse.data.repos.StatisticsRepository
 import com.conceptic.andcourse.usecase.UseCase
+import kotlinx.coroutines.coroutineScope
 
 class StatisticsCase(
     apiExecutorFactory: ApiExecutorFactory,
     private val statisticsRepository: StatisticsRepository
 ) : UseCase<Unit, List<Statistics>> {
-    private val statisticsApiExector = apiExecutorFactory.statisticsExecutor()
+    private val statisticsApiExecutor = apiExecutorFactory.statisticsExecutor()
 
-    override suspend fun execute(param: Unit): List<Statistics> {
-        return listOf(Statistics(ChartViewType.CHART_BAR, "", Statistics.ChartData(emptyList(), emptyList())))
+    override suspend fun execute(param: Unit): List<Statistics> = coroutineScope {
+        var statistics = statisticsRepository.statistics()
+        if (statistics.isEmpty()) {
+            val response = statisticsApiExecutor.statistics()
+            statistics = response.let {
+                it.statistics.map { statistic ->
+                    val chartValues = statistic.data.map { value -> ChartValue(value.x, value.y, value.label) }
+                    Statistics(
+                        ChartViewType.of(statistic.chartViewType),
+                        Statistics.ChartData(statistic.title, chartValues)
+                    )
+                }
+            }
+            with(statisticsRepository) {
+                drop()
+                store(statistics)
+            }
+        }
+        statistics
     }
 }

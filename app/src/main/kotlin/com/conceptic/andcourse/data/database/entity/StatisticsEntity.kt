@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class StatisticsEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val chartViewType: Int,
-    val name: String,
     val data: String
 )

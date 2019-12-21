@@ -14,14 +14,19 @@ class SummaryCase(
     private val questionnaireApiExecutor = apiExecutorFactory.questionnaireExecutor()
 
     override suspend fun execute(param: Unit): List<Feature> = coroutineScope {
-        val summary = summaryRepository.features()
-        if (summary.isEmpty()) {
+        var features = summaryRepository.features()
+        if (features.isEmpty()) {
             val response = questionnaireApiExecutor.summary()
-            response.let {
+            features = response.let {
                 it.features.map { feat ->
                     Feature(FeatureType.of(feat.featureType), feat.featureDescription, feat.points)
                 }
             }
-        } else summary
+            with(summaryRepository) {
+                drop()
+                store(features)
+            }
+        }
+        features
     }
 }

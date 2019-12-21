@@ -22,7 +22,7 @@ class PersonalPageFragment : BaseFragment<PersonalViewModel>(R.layout.fragment_p
 
         with(viewModel) {
             loadingLiveData.observe({ lifecycle }) { setLoadingVisible(it) }
-            logoutSuccessfulLiveDate.observe({ lifecycle }) { navController.popBackStack() }
+            logoutSuccessfulLiveDate.observe({ lifecycle }) { navController.popBackStack(R.id.summaryFragment, true) }
             credentialsLiveData.observe({ lifecycle }) { credentials ->
                 credentials?.let {
                     personal_mail.text = getString(R.string.personal_mail, credentials.mail)

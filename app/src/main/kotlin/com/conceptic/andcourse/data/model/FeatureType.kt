@@ -13,6 +13,6 @@ enum class FeatureType(@StringRes val description: Int) {
 
     companion object {
         fun of(value: Int) = values().find { it.ordinal == value }
-            ?: throw IllegalArgumentException("Unable to find type by value = $value")
+            ?: throw IllegalArgumentException("Unable to find type by y = $value")
     }
 }

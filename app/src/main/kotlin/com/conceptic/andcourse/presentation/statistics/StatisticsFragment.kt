@@ -25,15 +25,16 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
 
         setHasOptionsMenu(true)
 
-        viewModel.statisticsLiveData.observe({ lifecycle }) { statistics ->
-            statistics_placeholder.isVisible = statistics.isEmpty()
-            statisticsAdapter.items = statistics
+        with (viewModel) {
+            statisticsLiveData.observe({ lifecycle }) { statistics ->
+                statistics_placeholder.isVisible = statistics.isEmpty()
+                statisticsAdapter.items = statistics
+            }
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         statistics_view_pager.adapter = statisticsAdapter
-        swipe_refresh.setOnRefreshListener { viewModel.onRefreshed() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

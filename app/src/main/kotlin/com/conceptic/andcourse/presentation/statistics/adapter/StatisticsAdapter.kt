@@ -1,11 +1,13 @@
 package com.conceptic.andcourse.presentation.statistics.adapter
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.conceptic.andcourse.R
-import com.conceptic.andcourse.data.model.ChartViewType
 import com.conceptic.andcourse.data.model.Statistics
 import kotlinx.android.synthetic.main.item_statistics_page.view.*
 
@@ -28,16 +30,18 @@ class StatisticsAdapter : RecyclerView.Adapter<StatisticsAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val chartViewFactory = ChartViewFactory(itemView.context)
+        private var chartIsPresent = false
 
         fun bind(item: Statistics) {
             with(itemView) {
-                val chartView = when (item.chartViewType) {
-                    ChartViewType.CHART_BAR -> chartViewFactory.provideBarChart(item)
-                    ChartViewType.CHART_LINE -> chartViewFactory.provideLineChart(item)
-                    ChartViewType.CHART_PIE -> chartViewFactory.providePieChart(item)
+                if (!chartIsPresent) {
+                    chartIsPresent = true
+                    val chartView = chartViewFactory.provideChart(item)
+                    chart_container.addView(
+                        chartView,
+                        FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER)
+                    )
                 }
-
-                chart_container.addView(chartView)
             }
         }
     }
