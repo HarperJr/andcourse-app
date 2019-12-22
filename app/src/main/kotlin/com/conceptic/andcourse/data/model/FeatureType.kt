@@ -1,15 +1,12 @@
 package com.conceptic.andcourse.data.model
 
-import androidx.annotation.StringRes
-import com.conceptic.andcourse.R
-
-enum class FeatureType(@StringRes val description: Int) {
-    EXTRAVERSION_INTROVERSION(R.string.extraversion_introversion),
-    RIGIDITY_PLASTICITY(R.string.rigidity_plasticity),
-    EXCITABILITY_BALANCE(R.string.excitability_balance),
-    REACTION_TEMPO(R.string.reaction_tempo),
-    ACTIVITY_PASSIVITY(R.string.activity_passivity),
-    HONESTY_PRIVACY(R.string.honesty_privacy);
+enum class FeatureType {
+    EXTRAVERSION_INTROVERSION,
+    RIGIDITY_PLASTICITY,
+    EXCITABILITY_BALANCE,
+    REACTION_TEMPO,
+    ACTIVITY_PASSIVITY,
+    HONESTY_PRIVACY;
 
     companion object {
         fun of(value: Int) = values().find { it.ordinal == value }

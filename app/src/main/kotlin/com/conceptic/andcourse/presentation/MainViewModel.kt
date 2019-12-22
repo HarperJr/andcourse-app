@@ -18,9 +18,11 @@ class MainViewModel(
                     jwt.getClaim(ROLE_CLAIM)?.let { Role.of(it.asInt()!!) }
                 } else null
             }
-            emit(role)
+            emit(isFirstReq to role)
+            isFirstReq = false
         }
     }
+    private var isFirstReq = true
 
     companion object {
         private const val ROLE_CLAIM = "role"

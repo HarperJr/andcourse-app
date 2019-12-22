@@ -22,8 +22,7 @@ class PersonalViewModel(
 
     init {
         onStarted {
-            if (credentialsLiveData.value == null)
-                fetchCredentials()
+            fetchCredentials()
         }
     }
 

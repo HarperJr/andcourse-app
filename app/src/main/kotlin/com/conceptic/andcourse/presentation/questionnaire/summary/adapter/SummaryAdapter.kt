@@ -35,7 +35,7 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
     override fun getItemViewType(position: Int): Int = when (items[position]) {
         is Feature -> FEATURE_VIEW
         is RetryProposal -> RETRY_PROPOSAL_VIEW
-        else -> throw IllegalStateException("Unable to resolve viewType of item at position=$position")
+        else -> throw IllegalStateException("Unable to resolveAnnotation viewType of item at position=$position")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -43,7 +43,7 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
             when (viewType) {
                 FEATURE_VIEW -> FeatureViewHolder(inflate(R.layout.item_summary_feature_widget, parent, false))
                 RETRY_PROPOSAL_VIEW -> RetryProposalViewHolder(inflate(R.layout.item_summary_retry_proposal, parent, false))
-                else -> throw IllegalStateException("Unable to resolve view holder of item by view type=$viewType")
+                else -> throw IllegalStateException("Unable to resolveAnnotation view holder of item by view type=$viewType")
             }
         }
 
@@ -55,9 +55,12 @@ class SummaryAdapter(private val onRetryBtnClickListener: () -> Unit) : ListAdap
     }
 
     inner class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val summaryFeatureDescriptionResolver = SummaryFeatureDescriptionResolver(itemView.context)
+
         fun bind(item: Feature) = with(itemView) {
-            item_summary_title.text = context.getString(item.type.description)
-            item_summary_points.text = context.getString(R.string.summary_points, item.points)
+            item_summary_title.text = item.featureDescription
+            item_summary_points.text = context.getString(R.string.summary_points, item.points, item.maxPoints)
+            item_summary_description.text = context.getString(R.string.summary_annotation, summaryFeatureDescriptionResolver.resolveAnnotation(item))
         }
     }
 

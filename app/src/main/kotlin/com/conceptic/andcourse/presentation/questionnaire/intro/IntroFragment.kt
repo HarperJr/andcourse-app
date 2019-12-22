@@ -28,10 +28,6 @@ class IntroFragment :
         IntroPageItem(
             R.drawable.test_description,
             R.string.intro_page_3
-        ),
-        IntroPageItem(
-            R.drawable.test_description,
-            R.string.intro_page_4
         )
     )
 

@@ -16,8 +16,7 @@ class SummaryViewModel(
 
     init {
         onStarted {
-            if (summaryLiveData.value == null)
-                fetchSummary()
+            fetchSummary()
         }
     }
 

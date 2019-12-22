@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class FeatureEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val type: Int,
-    val description: String,
-    val points: Int
+    val featureDescription: String,
+    val points: Int,
+    val maxPoints: Int
 )

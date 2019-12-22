@@ -29,6 +29,7 @@
             tools:text="12/25" />
 
         <TextView
+            android:textColor="#000"
             android:id="@+id/item_summary_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

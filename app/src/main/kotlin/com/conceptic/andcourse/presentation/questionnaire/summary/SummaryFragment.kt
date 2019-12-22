@@ -5,8 +5,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.view.isVisible
 import com.conceptic.andcourse.R
+import com.conceptic.andcourse.data.model.Role
 import com.conceptic.andcourse.presentation.MainViewModel
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import com.conceptic.andcourse.presentation.questionnaire.summary.adapter.SummaryAdapter
@@ -14,6 +16,7 @@ import com.conceptic.andcourse.presentation.questionnaire.summary.view.OffsetDec
 import com.conceptic.andcourse.presentation.view.LoadingProgressDialog
 import kotlinx.android.synthetic.main.fragment_summary.*
 import kotlinx.android.synthetic.main.summary_placeholder.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -25,6 +28,7 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
         navController.navigate(R.id.action_summaryFragment_to_introFragment)
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(viewModel) {
@@ -44,7 +48,7 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
         inflater.inflate(R.menu.main_menu, menu)
         val accountMenuItem = menu.findItem(R.id.item_account)
 
-        val userRole = mainViewModel.roleLiveData.value
+        val userRole = mainViewModel.roleLiveData.value?.second
         userRole?.let {
             accountMenuItem.setIcon(R.drawable.ic_account)
         } ?: accountMenuItem.setIcon(R.drawable.ic_signin)
@@ -78,7 +82,7 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
     private fun setLoadingVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)
 
     private fun onAccountItemClicked() {
-        val userRole = mainViewModel.roleLiveData.value
+        val userRole = mainViewModel.roleLiveData.value?.second
         userRole?.let {
             navController.navigate(R.id.action_summaryFragment_to_personalPageFragment)
         } ?: navController.navigate(R.id.auth_navigation)

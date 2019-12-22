@@ -8,6 +8,7 @@ import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Role
 import com.conceptic.andcourse.presentation.base.BaseFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -16,15 +17,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val navController: NavController
         get() = findNavController(R.id.nav_host_fragment)
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
-        viewModel.roleLiveData.observe({ lifecycle }) { role ->
+        viewModel.roleLiveData.observe({ lifecycle }) { (isFirstReq, role) ->
             role?.let {
                 if (role == Role.OBSERVER)
                     navController.navigate(R.id.statisticsFragment, null)
-            } ?: navController.navigate(R.id.auth_navigation)
+            } ?: if (isFirstReq) {
+                navController.navigate(R.id.auth_navigation)
+            }
             invalidateOptionsMenu()
         }
     }

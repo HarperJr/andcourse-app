@@ -11,19 +11,19 @@ import kotlinx.coroutines.coroutineScope
 class SummaryCase(
     apiExecutorFactory: ApiExecutorFactory,
     private val summaryRepository: SummaryRepository,
-    private val tokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider
 ) : UseCase<Unit, List<Feature>> {
     private val questionnaireApiExecutor = apiExecutorFactory.questionnaireExecutor()
 
     override suspend fun execute(param: Unit): List<Feature> = coroutineScope {
-        val token = tokenProvider.get()
+        val token = jwtTokenProvider.get()
         if (token == null || token.expired()) {
             summaryRepository.features()
         } else {
             val response = questionnaireApiExecutor.features()
             response.let {
                 it.summaryRows.map { summaryRow ->
-                    Feature(FeatureType.of(summaryRow.featureType), summaryRow.featureDescription, summaryRow.points)
+                    Feature(FeatureType.of(summaryRow.featureType), summaryRow.featureDescription, summaryRow.points, summaryRow.maxPoints)
                 }
             }
         }

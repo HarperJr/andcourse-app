@@ -25,7 +25,7 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
 
         setHasOptionsMenu(true)
 
-        with (viewModel) {
+        with(viewModel) {
             statisticsLiveData.observe({ lifecycle }) { statistics ->
                 statistics_placeholder.isVisible = statistics.isEmpty()
                 statisticsAdapter.items = statistics
@@ -41,7 +41,7 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
         inflater.inflate(R.menu.main_menu, menu)
         val accountMenuItem = menu.findItem(R.id.item_account)
 
-        val userRole = mainViewModel.roleLiveData.value
+        val userRole = mainViewModel.roleLiveData.value?.second
         userRole?.let {
             accountMenuItem.setIcon(R.drawable.ic_account)
         } ?: accountMenuItem.setIcon(R.drawable.ic_signin)
@@ -64,7 +64,7 @@ class StatisticsFragment : BaseFragment<StatisticsViewModel>(R.layout.fragment_s
     }
 
     private fun onAccountItemClicked() {
-        val userRole = mainViewModel.roleLiveData.value
+        val userRole = mainViewModel.roleLiveData.value?.second
         userRole?.let {
             navController.navigate(R.id.action_statisticsFragment_to_personalPageFragment)
         } ?: navController.navigate(R.id.auth_navigation)
