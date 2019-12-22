@@ -11,6 +11,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -32,6 +33,7 @@ class ChartViewFactory(private val context: Context) {
                 setDrawInside(false)
                 xEntrySpace = 7f
                 yEntrySpace = 0f
+                description.text = ""
                 yOffset = 0f
             }
             setTouchEnabled(false)
@@ -78,7 +80,6 @@ class ChartViewFactory(private val context: Context) {
                 val barData = BarData(barDataSet)
                 applyDefaultParams(this, item)
                 barData.setValueTextSize(DEFAULT_VALUE_TEXT_SIZE)
-                xAxis.granularity = 1f
                 setData(barData)
             }
         }
@@ -87,7 +88,16 @@ class ChartViewFactory(private val context: Context) {
             with(chart.xAxis) {
                 granularity = 1f
                 isGranularityEnabled = true
+                position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = DEFAULT_AXIS_VALUE_FORMATTER.invoke(item, false)
+            }
+            with(chart.axisLeft) {
+                granularity = 1f
+                isGranularityEnabled = true
+            }
+            with(chart.axisRight) {
+                granularity = 1f
+                isGranularityEnabled = true
             }
         }
     }
@@ -117,6 +127,7 @@ class ChartViewFactory(private val context: Context) {
             with(chart.xAxis) {
                 granularity = 1f
                 isGranularityEnabled = true
+                position = XAxis.XAxisPosition.BOTTOM
                 valueFormatter = DEFAULT_AXIS_VALUE_FORMATTER.invoke(item, false)
             }
         }

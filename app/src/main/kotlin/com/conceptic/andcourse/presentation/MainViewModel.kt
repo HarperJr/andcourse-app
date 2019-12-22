@@ -5,11 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.model.Role
 import com.conceptic.andcourse.presentation.base.BaseViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class MainViewModel(
     private val jwtTokenProvider: JwtTokenProvider
 ) : BaseViewModel() {
-
+    @ExperimentalCoroutinesApi
     val roleLiveData = liveData(viewModelScope.coroutineContext) {
         jwtTokenProvider.observe { jwtToken ->
             val role = jwtToken?.let { jwt ->

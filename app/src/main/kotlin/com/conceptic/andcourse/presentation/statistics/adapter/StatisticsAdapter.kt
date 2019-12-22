@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.conceptic.andcourse.R
 import com.conceptic.andcourse.data.model.Statistics
+import com.conceptic.andcourse.support.AndroidUtils
 import kotlinx.android.synthetic.main.item_statistics_page.view.*
 
 class StatisticsAdapter : RecyclerView.Adapter<StatisticsAdapter.ViewHolder>() {
@@ -37,12 +38,24 @@ class StatisticsAdapter : RecyclerView.Adapter<StatisticsAdapter.ViewHolder>() {
                 if (!chartIsPresent) {
                     chartIsPresent = true
                     val chartView = chartViewFactory.provideChart(item)
+                    val layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER)
+                        .apply {
+                            val margin = AndroidUtils.dpToPx(CHART_MARGIN_DP)
+                            bottomMargin = margin
+                            topMargin = margin
+                            leftMargin = margin
+                            rightMargin = margin
+                        }
                     chart_container.addView(
                         chartView,
-                        FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, Gravity.CENTER)
+                        layoutParams
                     )
                 }
             }
         }
+    }
+
+    companion object {
+        private const val CHART_MARGIN_DP = 8
     }
 }

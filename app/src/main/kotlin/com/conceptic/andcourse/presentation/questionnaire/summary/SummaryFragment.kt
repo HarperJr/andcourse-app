@@ -66,6 +66,11 @@ class SummaryFragment : BaseFragment<SummaryViewModel>(R.layout.fragment_summary
         no_statistics_refresh_btn.setOnClickListener { navController.navigate(R.id.questionnaire_navigation) }
     }
 
+    override fun onBackPressed(): Boolean {
+        requireActivity().finish()
+        return false
+    }
+
     override fun handleError(message: String) {
         summary_placeholder.isVisible = true
     }

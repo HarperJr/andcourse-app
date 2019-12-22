@@ -15,23 +15,23 @@ class StatisticsCase(
     private val statisticsApiExecutor = apiExecutorFactory.statisticsExecutor()
 
     override suspend fun execute(param: Unit): List<Statistics> = coroutineScope {
-        var statistics = statisticsRepository.statistics()
-        if (statistics.isEmpty()) {
+        val cachedStatistics = statisticsRepository.statistics()
+        runCatching {
             val response = statisticsApiExecutor.statistics()
-            statistics = response.let {
+            response.let {
                 it.statistics.map { statistic ->
                     val chartValues = statistic.data.map { value -> ChartValue(value.x, value.y, value.label) }
                     Statistics(
                         ChartViewType.of(statistic.chartViewType),
-                        Statistics.ChartData(statistic.title, chartValues)
+                        Statistics.ChartData(statistic.title, statistic.xAxisLabel, statistic.yAxisLabel, chartValues)
                     )
                 }
             }
+        }.onSuccess { statistics ->
             with(statisticsRepository) {
                 drop()
                 store(statistics)
             }
-        }
-        statistics
+        }.getOrDefault(cachedStatistics)
     }
 }

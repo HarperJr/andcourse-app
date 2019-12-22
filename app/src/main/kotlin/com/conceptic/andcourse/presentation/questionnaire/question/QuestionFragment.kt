@@ -35,7 +35,7 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
                 onQuestionsDefined(questions)
             }
             questionnaireCompleteLiveData.observe({ lifecycle }) {
-                findNavController().popBackStack(R.id.summaryFragment, false)
+                findNavController().popBackStack(R.id.summaryFragment, true)
             }
             currentQuestionLiveData.observe({ lifecycle }) { currentQuestion ->
                 question_view_pager.setCurrentItem(currentQuestion.order, true)

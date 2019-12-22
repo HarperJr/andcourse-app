@@ -18,5 +18,5 @@ interface QuestionnaireApi {
     fun completeQuestionnaireAsync(): Deferred<Response<CompleteQuestionnaireResponse>>
 
     @GET("questionnaire/summary")
-    fun summaryAsync(): Deferred<Response<SummaryResponse>>
+    fun featuresAsync(): Deferred<Response<SummaryResponse>>
 }
