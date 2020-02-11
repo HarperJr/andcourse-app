@@ -1,12 +1,12 @@
 package com.conceptic.andcourse.usecase.auth.signin
 
-import com.conceptic.andcourse.data.api.support.JwtTokenWrapper
+import com.conceptic.andcourse.data.api.support.JwtToken
 
 object JwtTokenValidator {
     /**
      * There should be a lot of validation cases
      */
-    fun valid(jwt: JwtTokenWrapper): Boolean {
+    fun valid(jwt: JwtToken): Boolean {
         return jwt.issuer == ISSUER
     }
 

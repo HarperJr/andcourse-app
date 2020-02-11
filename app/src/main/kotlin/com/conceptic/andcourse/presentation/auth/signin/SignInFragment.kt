@@ -31,14 +31,12 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.signInSuccessLiveData.observe({ lifecycle }) {
-            navController.popBackStack(
-                R.id.summaryFragment,
-                false
-            )
+        with(viewModel) {
+            signInSuccessLiveData.observe({ lifecycle }) {
+                navController.navigate(R.id.summaryFragment )
+            }
+            loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
         }
-        viewModel.loadingProgressLiveData.observe({ lifecycle }) { loading -> setProgressVisible(loading) }
-
         googleAuthHandler.googleAuthResultCallback = googleAuthResultCallback
     }
 
@@ -54,7 +52,6 @@ class SignInFragment : BaseFragment<SignInViewModel>(R.layout.fragment_signin) {
         }
         signin_btn_goto_signup.setOnClickListener { navController.navigate(R.id.action_signinFragment_to_signUpFragment) }
         signin_btn_skip.setOnClickListener { navController.popBackStack(R.id.summaryFragment, false) }
-        signin_btn_with_google.setOnClickListener { googleAuthHandler.startSignInActivity(this) }
     }
 
     private fun setProgressVisible(visible: Boolean) = LoadingProgressDialog.setVisible(this, visible)

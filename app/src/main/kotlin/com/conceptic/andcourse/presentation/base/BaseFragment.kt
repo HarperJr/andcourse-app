@@ -16,8 +16,12 @@ abstract class BaseFragment<VM : BaseViewModel>(@LayoutRes layout: Int) : Fragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel.errorMessageLiveData.observe({ lifecycle }) { message -> handleError(message) }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.onStart()
     }
 
     open fun onBackPressed(): Boolean = true

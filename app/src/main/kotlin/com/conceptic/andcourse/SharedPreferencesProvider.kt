@@ -19,6 +19,10 @@ class SharedPreferencesProvider(context: Context) {
         }
     }
 
+    fun remove(key: String) = sharedPreferences.edit {
+        remove(key)
+    }
+
     companion object {
         private const val DEFAULT_PREFERENCES = "default_preferences"
     }

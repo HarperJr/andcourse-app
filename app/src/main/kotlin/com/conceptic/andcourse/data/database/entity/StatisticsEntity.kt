@@ -3,11 +3,9 @@ package com.conceptic.andcourse.data.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Features")
-data class FeatureEntity(
+@Entity(tableName = "Statistics")
+data class StatisticsEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val type: Int,
-    val featureDescription: String,
-    val points: Int,
-    val maxPoints: Int
+    val chartViewType: Int,
+    val data: String
 )

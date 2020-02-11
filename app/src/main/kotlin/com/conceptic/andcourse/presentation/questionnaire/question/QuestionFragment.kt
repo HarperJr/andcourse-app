@@ -35,7 +35,7 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
                 onQuestionsDefined(questions)
             }
             questionnaireCompleteLiveData.observe({ lifecycle }) {
-                findNavController().navigate(R.id.action_questionFragment_to_summaryFragment)
+                findNavController().popBackStack(R.id.summaryFragment, false)
             }
             currentQuestionLiveData.observe({ lifecycle }) { currentQuestion ->
                 question_view_pager.setCurrentItem(currentQuestion.order, true)
@@ -56,9 +56,8 @@ class QuestionFragment : BaseFragment<QuestionViewModel>(R.layout.fargment_quest
             backPressed = true
             showSnack(R.string.questionnaire_back_pressed_message, Snackbar.LENGTH_SHORT)
             handler.postDelayed({ backPressed = false }, BACK_PRESSED_DELAY_MILLIS)
-            return false
-        }
-        return super.onBackPressed()
+        } else navController.popBackStack(R.id.summaryFragment, false)
+        return false
     }
 
     private fun onCurrentQuestionChanged(question: Question) {

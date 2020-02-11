@@ -6,6 +6,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface StatisticsApi {
-    @GET("/statistics/all")
+    @GET("/statistics")
     fun statisticsAsync(): Deferred<Response<StatisticsResponse>>
 }

@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/summaryFragment">
 
     <fragment
-        android:id="@+id/questionFragment"
-        android:name="com.conceptic.andcourse.presentation.questionnaire.question.QuestionFragment"
-        android:label="QuestionFragment">
-
-        <action
-            android:id="@+id/action_questionFragment_to_summaryFragment"
-            app:destination="@id/summaryFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/introFragment"
-        android:name="com.conceptic.andcourse.presentation.questionnaire.intro.IntroFragment"
-        android:label="IntroFragment">
-
-        <action
-            android:id="@+id/action_introFragment_to_questionFragment"
-            app:destination="@id/questionFragment" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/summaryFragment"
         android:name="com.conceptic.andcourse.presentation.questionnaire.summary.SummaryFragment"
-        android:label="SummaryFragment">
+        android:label="Summary"
+        tools:layout="@layout/fragment_summary">
         <action
             android:id="@+id/action_summaryFragment_to_introFragment"
-            app:destination="@id/introFragment" />
+            app:destination="@id/questionnaire_navigation" />
         <action
             android:id="@+id/action_summaryFragment_to_auth_navigation"
             app:destination="@id/auth_navigation" />
         <action
-            android:id="@+id/action_summaryFragment_to_statisticsFragment"
-            app:destination="@id/statisticsFragment" />
+            android:id="@+id/action_summaryFragment_to_personalPageFragment"
+            app:destination="@id/personalPageFragment" />
     </fragment>
 
     <navigation
@@ -46,7 +27,8 @@
         <fragment
             android:id="@+id/signInFragment"
             android:name="com.conceptic.andcourse.presentation.auth.signin.SignInFragment"
-            android:label="SignInFragment">
+            android:label="SignInFragment"
+            tools:layout="@layout/fragment_signin">
 
             <action
                 android:id="@+id/action_signinFragment_to_signUpFragment"
@@ -56,11 +38,45 @@
         <fragment
             android:id="@+id/signUpFragment"
             android:name="com.conceptic.andcourse.presentation.auth.signup.SignUpFragment"
-            android:label="SignUpFragment" />
+            android:label="SignUpFragment"
+            tools:layout="@layout/fragment_signup" />
     </navigation>
+
+    <navigation
+        android:id="@+id/questionnaire_navigation"
+        app:startDestination="@id/introFragment">
+        <fragment
+            android:id="@+id/introFragment"
+            android:name="com.conceptic.andcourse.presentation.questionnaire.intro.IntroFragment"
+            android:label="IntroFragment"
+            tools:layout="@layout/fragment_intro">
+
+            <action
+                android:id="@+id/action_introFragment_to_questionFragment"
+                app:destination="@id/questionFragment" />
+
+        </fragment>
+        <fragment
+            android:id="@+id/questionFragment"
+            android:name="com.conceptic.andcourse.presentation.questionnaire.question.QuestionFragment"
+            android:label="QuestionFragment"
+            tools:layout="@layout/fargment_question" />
+    </navigation>
+
+    <fragment
+        android:id="@+id/personalPageFragment"
+        android:name="com.conceptic.andcourse.presentation.personal.PersonalPageFragment"
+        android:label="PersonalPageFragment"
+        tools:layout="@layout/fragment_personal" />
+
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.conceptic.andcourse.presentation.statistics.StatisticsFragment"
-        android:label="StatisticsFragment" />
+        android:label="Statistics"
+        tools:layout="@layout/fragment_statistics">
+        <action
+            android:id="@+id/action_statisticsFragment_to_personalPageFragment"
+            app:destination="@id/personalPageFragment" />
+    </fragment>
 
 </navigation>

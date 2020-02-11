@@ -1,44 +1,39 @@
 package com.conceptic.andcourse.presentation.questionnaire.summary
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.conceptic.andcourse.data.api.ApiException
-import com.conceptic.andcourse.data.model.Credentials
-import com.conceptic.andcourse.data.model.Role
+import com.conceptic.andcourse.data.model.Feature
 import com.conceptic.andcourse.presentation.base.BaseViewModel
 import com.conceptic.andcourse.usecase.questionnaire.summary.SummaryCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class SummaryViewModel(
     private val summaryCase: SummaryCase
 ) : BaseViewModel() {
     val loadingLiveData = MutableLiveData<Boolean>()
-    val statisticsRoutingLiveData = MutableLiveData<Unit>()
-    val summaryLiveData = liveData(viewModelScope.coroutineContext) {
-        coroutineScope {
-            runCatching {
-                loadingLiveData.value = true
-                withContext(Dispatchers.IO) {
-                    summaryCase.execute(Unit)
-                }
-            }.onSuccess { summaryFeatures ->
-                loadingLiveData.value = false
-                emit(summaryFeatures)
-            }.onFailure { throwable ->
-                loadingLiveData.value = false
-                ApiException.letFromThrowable(throwable) {
-                    errorMessages.postValue(it)
-                }
-            }
+    val summaryLiveData = MutableLiveData<List<Feature>>()
+
+    init {
+        onStarted {
+            fetchSummary()
         }
     }
 
-    fun onCredentialsReceived(credentials: Credentials) {
-        if (credentials.role == Role.OBSERVER) {
-            statisticsRoutingLiveData.value = Unit
+    private suspend fun fetchSummary() {
+        runCatching {
+            loadingLiveData.value = true
+            withContext(Dispatchers.IO) {
+                summaryCase.execute(Unit)
+            }
+        }.onSuccess { summaryFeatures ->
+            loadingLiveData.value = false
+            summaryLiveData.value = summaryFeatures
+        }.onFailure { throwable ->
+            loadingLiveData.value = false
+            ApiException.letFromThrowable(throwable) {
+                errorMessages.postValue(it)
+            }
         }
     }
 }

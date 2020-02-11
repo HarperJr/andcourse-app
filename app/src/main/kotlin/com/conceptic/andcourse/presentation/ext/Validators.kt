@@ -18,7 +18,7 @@ class ValidationScope(private val value: () -> String) {
     var key = 0
         private set
 
-    fun email(errorMessage: String) = regex(errorMessage, "[A-Za-z0-9_\\-]+@\\w+\\.\\w+")
+    fun email(errorMessage: String) = regex(errorMessage, "[A-Za-z0-9_.\\-]+@\\w+\\.\\w+")
 
     fun numeric(errorMessage: String) = regex(errorMessage, "\\d+")
 

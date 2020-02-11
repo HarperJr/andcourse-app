@@ -15,9 +15,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
-    override val viewModel: SignUpViewModel by currentScope.viewModel(this)
-
     private val calendar = Calendar.getInstance(TimeZone.getDefault())
+    override val viewModel: SignUpViewModel by currentScope.viewModel(this)
     private val dateFormatter = SimpleDateFormat("MM.dd.yyyy", Locale.getDefault())
         .apply { timeZone = TimeZone.getDefault() }
 
@@ -87,6 +86,14 @@ class SignUpFragment : BaseFragment<SignUpViewModel>(R.layout.fragment_signup) {
                 }.time
                 signup_input_date_birth_value.setText(dateFormatter.format(pickedDate))
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        ).apply {
+            datePicker.minDate = calendar.apply { set(Calendar.YEAR, MIN_PICKER_YEAR) }.timeInMillis
+            datePicker.maxDate = calendar.apply { set(Calendar.YEAR, MAX_PICKER_YEAR) }.timeInMillis
+        }.show()
+    }
+
+    companion object {
+        private const val MIN_PICKER_YEAR = 1900
+        private const val MAX_PICKER_YEAR = 2003
     }
 }

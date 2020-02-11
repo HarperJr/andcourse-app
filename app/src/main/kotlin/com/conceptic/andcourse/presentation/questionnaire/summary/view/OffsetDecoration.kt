@@ -4,14 +4,11 @@ import android.graphics.Rect
 import androidx.recyclerview.widget.RecyclerView
 import com.conceptic.andcourse.support.AndroidUtils
 
-class OffsetDecoration(offsetBottomDp: Int = 0, offsetAsideDp: Int = 0) : RecyclerView.ItemDecoration() {
-    private val offsetBottomPx = AndroidUtils.dpToPx(offsetBottomDp)
-    private val offsetAsidePx = AndroidUtils.dpToPx(offsetAsideDp)
+class OffsetDecoration(offsetVertical: Int = 0, offsetHorizontal: Int = 0) : RecyclerView.ItemDecoration() {
+    private val offsetVertical = AndroidUtils.dpToPx(offsetVertical)
+    private val offsetHorizontal = AndroidUtils.dpToPx(offsetHorizontal)
 
     override fun getItemOffsets(outRect: Rect, itemPosition: Int, parent: RecyclerView) {
-        parent.adapter?.let { adapter ->
-            if (itemPosition != 0 || itemPosition != adapter.itemCount)
-                outRect.set(offsetAsidePx, offsetBottomPx, offsetAsidePx, 0)
-        } ?: throw IllegalStateException("Adapter is undefined")
+        outRect.set(offsetHorizontal, offsetVertical, offsetHorizontal, offsetVertical)
     }
 }

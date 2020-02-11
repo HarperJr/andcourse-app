@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">andcourse</string>
+    <string name="app_name">IntelliQuest</string>
 
     <!--SignInFragment-->
     <string name="signin_btn_accept_text">SignIn</string>
@@ -38,16 +38,54 @@
     <string name="no_summary_description">Here you will see your summary.\nPlease press the button below to pass the questionnaire</string>
     <string name="summary_pass_questionnaire_btn">Pass questionnaire</string>
     <string name="summary">Summary</string>
-    <string name="summary_points">Points: %d/25</string>
+    <string name="summary_points">Points: %d/%d</string>
 
     <!--FeatureType-->
-    <string name="extraversion_introversion">Extraversion/Introversion</string>
-    <string name="rigidity_plasticity">Rigidity/Plasticity</string>
-    <string name="excitability_balance">Excitability/Balance</string>
-    <string name="reaction_tempo">Reaction/Tempo</string>
-    <string name="activity_passivity">Activity/Passivity</string>
-    <string name="honesty_privacy">Honesty/Privacy</string>
     <string name="auth_proposal_title">Want to retry to pass the questionnaire?</string>
     <string name="auth_proposal_btn">Retry to pass</string>
     <string name="menu_account">Account</string>
+
+    <!--IntroFragment-->
+    <string name="intro_page_1">Welcome! This questionnaire is supposed to associate your temperaments features to defined ranges</string>
+    <string name="intro_page_2">That means that any of your answer could reflect on the result of the questionnaire</string>
+    <string name="intro_page_3">There are a few characteristics of human temperaments. You have to choose between positive and negative answers. So keep going and good luck!</string>
+
+    <!--PersonalPageFragment-->
+    <string name="personal_logout">Logout</string>
+    <string name="receive_personal_error">Oops… Sorry but it seems you are requesting not existed page, please retry</string>
+    <string name="personal_mail">Mail: %s</string>
+    <string name="personal_gender">Gender: %s</string>
+    <string name="personal_date_birth">Date birth: %s</string>
+    <string name="personal_date_registered">Date registered: %s</string>
+    <string name="personal_retry_btn">Retry</string>
+
+    <!--StatisticsFragment-->
+    <string name="no_statistics_description">Oops… It seems we cannot to provide you some statistics yet.\nPlease try later</string>
+    <string name="no_statistics_refresh_btn">Refresh</string>
+
+    <string name="privacy">Privacy</string>
+    <string name="honesty_privacy_middle">Honesty and privancy balanced</string>
+    <string name="honesty">Honesty</string>
+
+    <string name="introversion">Introversion</string>
+    <string name="introversion_introversion_middle">Extraversion and introversion balanced</string>
+    <string name="extraversion">Extraversion</string>
+
+    <string name="rigidity">Rigidity</string>
+    <string name="rigidity_plasticity_middle">Rigidity and plasticity balanced</string>
+    <string name="plasticity">Plasticity</string>
+
+    <string name="activity">Activity</string>
+    <string name="activity_passivity_middle">Activity and passivity balanced</string>
+    <string name="passivity">Passivity</string>
+
+    <string name="excitability">Excitability</string>
+    <string name="excitability_balance_middle">Excitability and balance balanced</string>
+    <string name="balance">Balance</string>
+
+    <string name="reaction">Reaction</string>
+    <string name="reaction_tempo_middle">Reaction and tempo balanced</string>
+    <string name="tempo">Tempo</string>
+
+    <string name="summary_annotation">Your result is: %s</string>
 </resources>

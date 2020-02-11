@@ -1,6 +1,7 @@
 package com.conceptic.andcourse.usecase.questionnaire.summary
 
 import com.conceptic.andcourse.data.api.ApiExecutorFactory
+import com.conceptic.andcourse.data.api.auth.JwtTokenProvider
 import com.conceptic.andcourse.data.model.Feature
 import com.conceptic.andcourse.data.model.FeatureType
 import com.conceptic.andcourse.data.repos.SummaryRepository
@@ -9,19 +10,22 @@ import kotlinx.coroutines.coroutineScope
 
 class SummaryCase(
     apiExecutorFactory: ApiExecutorFactory,
-    private val summaryRepository: SummaryRepository
+    private val summaryRepository: SummaryRepository,
+    private val jwtTokenProvider: JwtTokenProvider
 ) : UseCase<Unit, List<Feature>> {
     private val questionnaireApiExecutor = apiExecutorFactory.questionnaireExecutor()
 
     override suspend fun execute(param: Unit): List<Feature> = coroutineScope {
-        val summary = summaryRepository.features()
-        if (summary.isEmpty()) {
-            val response = questionnaireApiExecutor.summary()
+        val token = jwtTokenProvider.get()
+        if (token == null || token.expired()) {
+            summaryRepository.features()
+        } else {
+            val response = questionnaireApiExecutor.features()
             response.let {
-                it.features.map { feat ->
-                    Feature(FeatureType.of(feat.featureType), feat.featureDescription, feat.points)
+                it.summaryRows.map { summaryRow ->
+                    Feature(FeatureType.of(summaryRow.featureType), summaryRow.featureDescription, summaryRow.points, summaryRow.maxPoints)
                 }
             }
-        } else summary
+        }
     }
 }

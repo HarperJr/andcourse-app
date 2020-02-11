@@ -6,6 +6,12 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/statistics_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+    <!--Shown only when there is no statistics were provided-->
+    <include
+        android:id="@+id/statistics_placeholder"
+        layout="@layout/statistics_placeholder"
+        android:visibility="gone" />
 
 </FrameLayout>

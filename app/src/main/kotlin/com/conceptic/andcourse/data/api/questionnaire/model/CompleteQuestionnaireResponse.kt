@@ -1,3 +1,3 @@
 package com.conceptic.andcourse.data.api.questionnaire.model
 
-data class CompleteQuestionnaireResponse(val results: List<FeatureResult>)
+data class CompleteQuestionnaireResponse(val results: List<SummaryRow>)
